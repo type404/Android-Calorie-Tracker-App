@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">CalorieTracker</string>
+    <string name="username">Enter username</string>
+    <string name="password">Enter Password</string>
+    <string name="dob">DD/MM/YYYY</string>
+    <string name="title_activity_homescreen">Homescreen</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Track It</string>
+    <string name="nav_header_subtitle">Calorie Tracker App</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+</resources>
