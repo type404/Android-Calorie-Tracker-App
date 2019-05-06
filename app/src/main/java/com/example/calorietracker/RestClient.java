@@ -5,33 +5,35 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class RestClient {
-    public RestClient(){
-
-    }
     private static final String BASE_URL =
             "http://192.168.111.1:8080/CalorieTrackerApp/webresources/";
-    public static String getData() {
-        final String methodPath = "restws.credential/";
+
+    public static String getCredentials(String username) {
+        final String methodPath = "restws.credential/findByUsername" + username;
         //initialise
+        String s = HTTPConnection(methodPath);
+        return s;
+    }
+    public static String HTTPConnection(String methodPath){
         URL url = null;
         HttpURLConnection conn = null;
         String textResult = "";
-//Making HTTP request
+    //Making HTTP request
         try {
             url = new URL(BASE_URL + methodPath);
-//open the connection
+    //open the connection
             conn = (HttpURLConnection) url.openConnection();
-//set the timeout
+    //set the timeout
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(150000);
-//set the connection method to GET
+    //set the connection method to GET
             conn.setRequestMethod("GET");
-//add http headers to set your response type to json
+    //add http headers to set your response type to json
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("Accept", "application/json");
-//Read the response
+    //Read the response
             Scanner inStream = new Scanner(conn.getInputStream());
-//read the input stream and store it as string
+    //read the input stream and store it as string
             while (inStream.hasNextLine()) {
                 textResult += inStream.nextLine();
             }
