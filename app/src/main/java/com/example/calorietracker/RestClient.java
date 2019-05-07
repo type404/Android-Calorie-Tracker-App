@@ -9,7 +9,7 @@ public class RestClient {
             "http://192.168.111.1:8080/CalorieTrackerApp/webresources/";
 
     public static String getCredentials(String username) {
-        final String methodPath = "restws.credential/findByUsername" + username;
+        final String methodPath = "restws.credential/findByUsername/" + username;
         //initialise
         String s = HTTPConnection(methodPath);
         return s;

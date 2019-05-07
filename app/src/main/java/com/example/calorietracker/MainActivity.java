@@ -9,58 +9,66 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.json.JSONException;
+
 
 public class MainActivity extends AppCompatActivity {
     EditText username;
     EditText password;
     String tmpName;
     String tmpPw;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button loginBtn = findViewById(R.id.btn_login);
-        username = findViewById(R.id.text_username);
-        password = findViewById(R.id.text_password);
-        tmpName = username.getText().toString();
-        tmpPw = password.getText().toString();
         TextView signupLink = findViewById(R.id.link_signup);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                username = findViewById(R.id.text_username);
+                password = findViewById(R.id.text_password);
+                tmpName = username.getText().toString();
+                tmpPw = password.getText().toString();
                 UsersValidationAsyncTask validateUsers = new UsersValidationAsyncTask();
                 validateUsers.execute();
-                login();
             }
         });
         signupLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,SignUp.class);
+                Intent intent = new Intent(MainActivity.this, SignUp.class);
                 startActivity(intent);
             }
         });
-
-
     }
-    private class UsersValidationAsyncTask extends AsyncTask<String, Void, Void> {
+
+    private class UsersValidationAsyncTask extends AsyncTask<Void, Void, String> {
         @Override
-        protected Void doInBackground (String... tmpName){
-             RestClient.getCredentials(tmpName);
-             return null;
-        }
-        @Override
-        protected void onPostExecute (Void v){
-            Intent intent = new Intent(MainActivity.this,Homescreen.class);
-            startActivity(intent);
+        protected String doInBackground(Void... v) {
+            return RestClient.getCredentials(tmpName);
         }
 
-    }
-    private void login(String s) {
-        Credential.checkCredential(s);
+        @Override
+        protected void onPostExecute(String json) {
+            String pwHash = Credential.passHashConverter(tmpPw);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            Credential userCredential = gson.fromJson(json, Credential.class);
+            if (pwHash.equals(userCredential.getPasswordHash())) {
+                Intent intent = new Intent(MainActivity.this, Homescreen.class);
+                startActivity(intent);
+            }
+//           else
+//
+//            {
+//            }
+        }
+
 
     }
-
-
 }
