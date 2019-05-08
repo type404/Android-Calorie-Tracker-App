@@ -31,17 +31,26 @@ public class Users {
         this.userId = userId;
     }
 
-    public Users(Integer userId, String firstname, String email, Date dob, int heightCms, int weightKgs, Character gender, String postcode, int levelsOfActivity, int stepsPerMile) {
+    public Users(Integer userId, String firstname, String lastname, String email, Date dob, int heightCms, int weightKgs, Character gender, String address, String postcode, int levelsOfActivity, int stepsPerMile) {
         this.userId = userId;
         this.firstname = firstname;
+        this.surname = lastname;
         this.email = email;
         this.dob = dob;
         this.heightCms = heightCms;
         this.weightKgs = weightKgs;
         this.gender = gender;
+        this.address = address;
         this.postcode = postcode;
         this.levelsOfActivity = levelsOfActivity;
         this.stepsPerMile = stepsPerMile;
+    }
+
+    private static long idCounter = 6;
+
+    public static synchronized String createID()
+    {
+        return String.valueOf(idCounter++);
     }
 
     public Integer getUserId() {

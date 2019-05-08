@@ -75,17 +75,6 @@
             android:inputType="textPassword"
             android:hint="Password"/>
     </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/passwordConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="Confirm your Password"/>
-    </android.support.design.widget.TextInputLayout>
     <!--Height and Weight Label-->
     <LinearLayout
         android:layout_width="wrap_content"
@@ -130,6 +119,7 @@
         android:paddingTop="20dp">
 
         <RadioGroup
+            android:id="@+id/radio_grp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

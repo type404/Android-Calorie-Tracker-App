@@ -8,13 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.json.JSONException;
-
-
 public class MainActivity extends AppCompatActivity {
     EditText username;
     EditText password;
@@ -63,12 +60,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, Homescreen.class);
                 startActivity(intent);
             }
-//           else
-//
-//            {
-//            }
+           else
+            {
+                Toast.makeText(getApplicationContext(),"Login Failed!",Toast.LENGTH_LONG).show();
+            }
         }
-
-
     }
 }
