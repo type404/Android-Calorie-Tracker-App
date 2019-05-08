@@ -57,7 +57,7 @@ public class RestClient {
         HttpURLConnection conn = null;
         final String methodPath="/restws.users/";
         try {
-            Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'hh':'mm").create();
             String stringUserJson=gson.toJson(user);
             url = new URL(BASE_URL + methodPath);
             //open the connection
