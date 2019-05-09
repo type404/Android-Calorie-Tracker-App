@@ -1,12 +1,15 @@
 package com.example.calorietracker;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Date;
-public class Users {
+public class Users implements Parcelable {
 
     private Integer userId;
     private String firstname;
@@ -47,6 +50,37 @@ public class Users {
     }
 
     private static long idCounter = 6;
+
+    protected Users(Parcel in) {
+        if (in.readByte() == 0) {
+            userId = null;
+        } else {
+            userId = in.readInt();
+        }
+        firstname = in.readString();
+        surname = in.readString();
+        email = in.readString();
+        heightCms = in.readInt();
+        weightKgs = in.readInt();
+        int tmpGender = in.readInt();
+        gender = tmpGender != Integer.MAX_VALUE ? (char) tmpGender : null;
+        address = in.readString();
+        postcode = in.readString();
+        levelsOfActivity = in.readInt();
+        stepsPerMile = in.readInt();
+    }
+
+    public static final Creator<Users> CREATOR = new Creator<Users>() {
+        @Override
+        public Users createFromParcel(Parcel in) {
+            return new Users(in);
+        }
+
+        @Override
+        public Users[] newArray(int size) {
+            return new Users[size];
+        }
+    };
 
     public static synchronized String createID()
     {
@@ -204,5 +238,29 @@ public class Users {
         return "restws.Users[ userId=" + userId + " ]";
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (userId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(userId);
+        }
+        dest.writeString(firstname);
+        dest.writeString(surname);
+        dest.writeString(email);
+        dest.writeInt(heightCms);
+        dest.writeInt(weightKgs);
+        dest.writeInt(gender != null ? (int) gender : Integer.MAX_VALUE);
+        dest.writeString(address);
+        dest.writeString(postcode);
+        dest.writeInt(levelsOfActivity);
+        dest.writeInt(stepsPerMile);
+    }
 }
 

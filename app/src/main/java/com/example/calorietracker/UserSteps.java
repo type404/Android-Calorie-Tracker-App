@@ -10,7 +10,7 @@ public class UserSteps extends Fragment {
     View vUserSteps;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-        vUserSteps = inflater.inflate(R.layout.fragment_homescreen_main, container, false);
+        vUserSteps = inflater.inflate(R.layout.fragment_user_steps, container, false);
         return vUserSteps;
     }
 }

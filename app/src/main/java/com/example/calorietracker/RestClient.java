@@ -19,6 +19,13 @@ public class RestClient {
         String s = HTTPConnection(methodPath);
         return s;
     }
+    //get report from user Id
+    public static String getReportFromUserId(Integer id) {
+        final String methodPath = "restws.report/findByUserId/" + id;
+        //initialise
+        String s = HTTPConnection(methodPath);
+        return s;
+    }
     //class to start a HTTP Get Connection
     public static String HTTPConnection(String methodPath){
         URL url = null;

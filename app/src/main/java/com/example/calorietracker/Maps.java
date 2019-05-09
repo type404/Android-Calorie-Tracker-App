@@ -10,7 +10,7 @@ public class Maps extends Fragment {
     View vMaps;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-        vMaps = inflater.inflate(R.layout.fragment_homescreen_main, container, false);
+        vMaps = inflater.inflate(R.layout.fragment_maps, container, false);
         return vMaps;
     }
 }

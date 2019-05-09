@@ -2,6 +2,8 @@ package com.example.calorietracker;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -56,9 +58,17 @@ public class MainActivity extends AppCompatActivity {
             String pwHash = Credential.passHashConverter(tmpPw);
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             Credential userCredential = gson.fromJson(json, Credential.class);
+            Users loggedInUser = userCredential.getUserId();
             if (pwHash.equals(userCredential.getPasswordHash())) {
-                Intent intent = new Intent(MainActivity.this, Homescreen.class);
-                startActivity(intent);
+               Intent intent = new Intent(MainActivity.this, Homescreen.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("loggedInUser",loggedInUser);
+                    intent.putExtras(bundle);
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                Fragment fragment = MainFragment.newInstance(loggedInUser);
+//                ft.replace(R.id.main_fragment_frame, fragment);
+//                ft.commit();
+               startActivity(intent);
             }
            else
             {

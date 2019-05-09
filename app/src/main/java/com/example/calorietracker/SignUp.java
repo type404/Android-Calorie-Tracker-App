@@ -69,7 +69,7 @@ public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDate
                 tmpPAddress = ((EditText) findViewById(R.id.address)).getText().toString();
                 tmpPostcode = ((EditText) findViewById(R.id.postcode)).getText().toString();
                 tmpDate = dobDate+"T00:00:00+11:00";
-                tmpUserId = Users.createID();
+                tmpUserId = "next value for user_seq";
                 PostAsyncTask postAsyncTask=new PostAsyncTask();
                 if (!(tmpUserId).isEmpty() && !(tmpFName).isEmpty() && !(tmpLName).isEmpty() && !(tmpEmail).isEmpty() && !(tmpDate).isEmpty() && !(tmpHeight).isEmpty()
                         && !(tmpWeight).isEmpty() && !(tmpGender).isEmpty() && !(tmpPAddress).isEmpty() && !(tmpPostcode).isEmpty()

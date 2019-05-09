@@ -10,7 +10,7 @@ public class Report extends Fragment {
     View vReport;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-        vReport = inflater.inflate(R.layout.fragment_homescreen_main, container, false);
+        vReport = inflater.inflate(R.layout.fragment_report, container, false);
         return vReport;
     }
 }
