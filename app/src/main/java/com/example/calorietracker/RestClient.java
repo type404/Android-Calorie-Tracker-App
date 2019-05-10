@@ -26,7 +26,7 @@ public class RestClient {
         String s = HTTPConnection(methodPath);
         return s;
     }
-    //class to start a HTTP Get Connection
+    //method to start a HTTP Get Connection
     public static String HTTPConnection(String methodPath){
         URL url = null;
         HttpURLConnection conn = null;
@@ -62,10 +62,47 @@ public class RestClient {
         //initialise
         URL url = null;
         HttpURLConnection conn = null;
-        final String methodPath="/restws.users/";
+        final String methodPath="restws.users/";
         try {
-            Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'hh':'mm").create();
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").create();
+            //         Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'hh':'mm").create();
             String stringUserJson=gson.toJson(user);
+            url = new URL(BASE_URL + methodPath);
+            //open the connection
+            conn = (HttpURLConnection) url.openConnection();
+            //set the timeout
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
+            //set the connection method to POST
+            conn.setRequestMethod("POST");
+            //set the output to true
+            conn.setDoOutput(true);
+            //set length of the data you want to send
+            conn.setFixedLengthStreamingMode(stringUserJson.getBytes().length);
+            //add HTTP headers
+            conn.setRequestProperty("Content-Type", "application/json");
+            //Send the POST out
+            PrintWriter out= new PrintWriter(conn.getOutputStream());
+            out.print(stringUserJson);
+            out.close();
+            Log.i("error",new Integer(conn.getResponseCode()).toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conn.disconnect();
+        }
+    }
+    public static void createUserCredential(Credential cred){
+        //initialise
+        URL url = null;
+        HttpURLConnection conn = null;
+        final String methodPath="restws.credential/";
+        try {
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").create();
+            //         Gson gson =new GsonBuilder().setDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'hh':'mm").create();
+            String stringUserJson=gson.toJson(cred);
             url = new URL(BASE_URL + methodPath);
             //open the connection
             conn = (HttpURLConnection) url.openConnection();

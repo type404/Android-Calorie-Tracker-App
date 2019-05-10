@@ -34,7 +34,7 @@ public class Users implements Parcelable {
         this.userId = userId;
     }
 
-    public Users(Integer userId, String firstname, String lastname, String email, Date dob, int heightCms, int weightKgs, Character gender, String address, String postcode, int levelsOfActivity, int stepsPerMile) {
+    public Users( Integer userId, String firstname, String lastname, String email, Date dob, int heightCms, int weightKgs, Character gender, String address, String postcode, int levelsOfActivity, int stepsPerMile) {
         this.userId = userId;
         this.firstname = firstname;
         this.surname = lastname;

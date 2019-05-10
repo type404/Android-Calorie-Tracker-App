@@ -22,7 +22,7 @@
         app:headerLayout="@layout/nav_header_homescreen"
         app:menu="@menu/activity_homescreen_drawer" />
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
@@ -31,41 +31,51 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:gravity="center"
-            android:textSize="20dp"
+            android:textSize="30dp"
+            android:textStyle="bold"
             android:text=""
+            android:textColor="	#000000"
             android:textColorLink="#8C229E" />
         <TextView
             android:id="@+id/currDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="90dp"
             android:gravity="center"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:text=""
+            android:textColor="	#000000"
+            android:textStyle="bold"
             android:textColorLink="#8C229E" />
-
         <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="match_parent"
+            android:id="@+id/image1"
+            android:layout_marginTop="200dp"
+            android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/fitness_pic"
-            android:layout_alignParentLeft="true" />
+            android:layout_marginLeft="100dp"
+            android:src="@drawable/fitness_pic" />
+    </RelativeLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="300dp"
-            android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/setCalGoal"
+            android:orientation="horizontal"
+            android:layout_marginTop="300dp">
+
+            <TextView
+                android:id="@+id/setCalGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="" />
-        </android.support.design.widget.TextInputLayout>
-    </RelativeLayout>
+                android:layout_marginTop="400dp"
+                android:text=" "
+                android:textSize="16dip" />
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_updateCalGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update Cal Goals" />
+        </LinearLayout>
+
 
 </android.support.v4.widget.DrawerLayout>
 

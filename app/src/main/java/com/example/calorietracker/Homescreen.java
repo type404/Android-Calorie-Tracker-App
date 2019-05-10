@@ -25,7 +25,7 @@ import java.util.Locale;
 public class Homescreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView welcomeText;
-    ReportNetbeans tmpUserReport;
+    TextView calGoals;
     Integer userId;
 
     @Override
@@ -55,10 +55,25 @@ public class Homescreen extends AppCompatActivity
         TextView date = (TextView) findViewById(R.id.currDate);
         date.setText(curr_date);
 
-//        EditText calGoals = (EditText) findViewById(R.id.setCalGoal);
-//        UserGetReportAsyncTask userReport = new UserGetReportAsyncTask();
-//        userReport.execute();
-//        calGoals.setText(tmpUserReport.getSetCalsGoal());
+           calGoals = findViewById(R.id.setCalGoal);
+        UserGetReportAsyncTask userReport = new UserGetReportAsyncTask();
+        userReport.execute();
+
+    }
+
+    private class UserGetReportAsyncTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... v) {
+            return RestClient.getReportFromUserId(userId);
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            ReportNetbeans rn = gson.fromJson(json, ReportNetbeans.class);
+            String getCalGoals = rn.getSetCalsGoal().toString();
+            calGoals.setText(getCalGoals);
+        }
     }
 
 
@@ -119,17 +134,4 @@ public class Homescreen extends AppCompatActivity
         return true;
     }
 
-    private class UserGetReportAsyncTask extends AsyncTask<Void, Void, String> {
-        @Override
-        protected String doInBackground(Void... v) {
-            return RestClient.getReportFromUserId(userId);
-        }
-
-        @Override
-        protected void onPostExecute(String json) {
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-            ReportNetbeans rn = gson.fromJson(json, ReportNetbeans.class);
-            tmpUserReport = rn;
-        }
-    }
 }

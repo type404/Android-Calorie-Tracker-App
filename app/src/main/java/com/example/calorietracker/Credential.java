@@ -33,10 +33,11 @@ public class Credential {
             this.username = username;
         }
 
-        public Credential(String username, String passwordHash, Date signUpDate) {
+        public Credential(String username, String passwordHash, Date signUpDate, Users user) {
             this.username = username;
             this.passwordHash = passwordHash;
             this.signUpDate = signUpDate;
+            this.userId = user;
         }
 
         public String getUsername() {

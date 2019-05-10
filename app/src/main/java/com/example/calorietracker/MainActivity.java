@@ -64,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("loggedInUser",loggedInUser);
                     intent.putExtras(bundle);
+                    startActivity(intent);
 //                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //                Fragment fragment = MainFragment.newInstance(loggedInUser);
 //                ft.replace(R.id.main_fragment_frame, fragment);
 //                ft.commit();
-               startActivity(intent);
             }
            else
             {

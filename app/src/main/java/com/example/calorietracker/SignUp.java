@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private TextView dobView;
@@ -42,7 +43,6 @@ public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDate
     private String tmpLOA;
     private String tmpPAddress;
     private String tmpPostcode;
-    private String tmpDate;
     String dobDate;
     Spinner activityLevel;
     @Override
@@ -68,13 +68,14 @@ public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDate
                 tmpSPM = ((EditText) findViewById(R.id.stepsPerMile)).getText().toString();
                 tmpPAddress = ((EditText) findViewById(R.id.address)).getText().toString();
                 tmpPostcode = ((EditText) findViewById(R.id.postcode)).getText().toString();
-                tmpDate = dobDate+"T00:00:00+11:00";
-                tmpUserId = "next value for user_seq";
+                tmpUserId = Users.createID();
+                String sinup_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new java.util.Date());
                 PostAsyncTask postAsyncTask=new PostAsyncTask();
-                if (!(tmpUserId).isEmpty() && !(tmpFName).isEmpty() && !(tmpLName).isEmpty() && !(tmpEmail).isEmpty() && !(tmpDate).isEmpty() && !(tmpHeight).isEmpty()
+                if (!(tmpUserId).isEmpty() && !(tmpFName).isEmpty() && !(tmpLName).isEmpty() && !(tmpEmail).isEmpty() && !(dobDate).isEmpty() && !(tmpHeight).isEmpty()
                         && !(tmpWeight).isEmpty() && !(tmpGender).isEmpty() && !(tmpPAddress).isEmpty() && !(tmpPostcode).isEmpty()
                         && !(SpinnerItemValue).isEmpty() && !(tmpSPM).isEmpty()) {
-                    postAsyncTask.execute(tmpUserId,tmpFName,tmpLName,tmpEmail,tmpDate,tmpHeight,tmpWeight,tmpGender,tmpPAddress,tmpPostcode,SpinnerItemValue,tmpSPM);
+
+                    postAsyncTask.execute(tmpUserId,tmpFName,tmpLName,tmpEmail,dobDate,tmpHeight,tmpWeight,tmpGender,tmpPAddress,tmpPostcode,SpinnerItemValue,tmpSPM, tmpUName, tmpPwdHash, sinup_date);
                 }
             }
         });
@@ -123,8 +124,11 @@ public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDate
     {
         @Override
         protected String doInBackground(String... params) {
+       //     Users user=new Users(params[0],params[1],params[2], Date.valueOf(params[3]),Integer.valueOf(params[4]),Integer.valueOf(params[5]),Character.valueOf(params[6].charAt(0)),params[7],params[8],Integer.valueOf(params[9]),Integer.valueOf(params[10]));
             Users user=new Users(Integer.valueOf(params[0]),params[1],params[2],params[3], Date.valueOf(params[4]),Integer.valueOf(params[5]),Integer.valueOf(params[6]),Character.valueOf(params[7].charAt(0)),params[8],params[9],Integer.valueOf(params[10]),Integer.valueOf(params[11]));
             RestClient.createUsers(user);
+            Credential cred = new Credential(params[12],params[13],Date.valueOf(params[14]),user);
+            RestClient.createUserCredential(cred);
             return "User was added!";
         }
         @Override
@@ -146,7 +150,7 @@ public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDate
 
     @Override
     public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
-        dobDate = dayOfMonth + "-" + month + "-" + year;
+        dobDate = year+"-"+month+"-"+dayOfMonth;
         dobView = findViewById(R.id.dob);
         dobView.setText(dobDate);
     }
