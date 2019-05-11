@@ -26,6 +26,13 @@ public class RestClient {
         String s = HTTPConnection(methodPath);
         return s;
     }
+    //get food items by category
+    public static String getFoodItems(String category) {
+        final String methodPath = "restws.food/findByCategory/" + category;
+        //initialise
+        String s = HTTPConnection(methodPath);
+        return s;
+    }
     //method to start a HTTP Get Connection
     public static String HTTPConnection(String methodPath){
         URL url = null;

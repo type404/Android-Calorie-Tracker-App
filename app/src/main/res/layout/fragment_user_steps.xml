@@ -3,16 +3,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/user_steps_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:orientation="vertical">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/nameDT"
+                android:layout_width="150dp"
+                android:layout_height="57dp"
+                android:layout_weight="1"
+                android:text="Date and Time" />
+
+            <TextView
+                android:id="@+id/nameSteps"
+                android:layout_width="184dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Steps Taken" />
+        </LinearLayout>
+
         <ListView
             android:id="@+id/list_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="436dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="86dp"
+            android:orientation="horizontal"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
+
+            <EditText
+                android:id="@+id/addSteps"
+                android:layout_width="157dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_style_border"
+                android:ems="10"
+                android:inputType="textShortMessage"
+                android:text="" />
+
+            <Button
+                android:id="@+id/addStepsButton"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ADD STEPS" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

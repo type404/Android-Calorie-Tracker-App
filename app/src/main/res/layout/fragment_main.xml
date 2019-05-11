@@ -15,33 +15,39 @@
         android:text=""
         android:textColor="	#000000"
         android:textColorLink="#8C229E" />
+
     <TextView
         android:id="@+id/currDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
         android:gravity="center"
-        android:textSize="20dp"
         android:text=""
         android:textColor="	#000000"
-        android:textStyle="bold"
-        android:textColorLink="#8C229E" />
+        android:textColorLink="#8C229E"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/image1"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="138dp"
         android:src="@drawable/fitness_pic" />
 
     <TextView
         android:id="@+id/setCalGoal"
-        android:layout_width="183dp"
-        android:layout_height="37dp"
+        android:layout_width="363dp"
+        android:layout_height="34dp"
+        android:layout_below="@+id/image1"
         android:layout_alignEnd="@+id/welcomeMessage"
-        android:layout_marginTop="400dp"
-        android:layout_marginEnd="9dp"
+        android:layout_alignRight="@+id/welcomeMessage"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
         android:text=" "
         android:textSize="16dip" />
 
@@ -52,9 +58,30 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="214dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginRight="33dp"
+        android:layout_marginBottom="198dp"
         android:gravity="center_vertical"
-        android:text="Update Cal Goals" />
+        android:text="Update" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilUCG"
+        android:layout_width="176dp"
+        android:layout_height="73dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="58dp"
+        android:layout_marginLeft="58dp"
+        android:layout_marginBottom="200dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="157dp"
+            android:layout_height="41dp"
+            android:layout_below="@+id/tilUCG"
+            android:layout_alignStart="@+id/tilUCG"
+            android:layout_alignLeft="@+id/tilUCG"
+            android:layout_marginTop="-200dp"
+            android:hint="Update Cal Goals" />
+    </android.support.design.widget.TextInputLayout>
 </RelativeLayout>

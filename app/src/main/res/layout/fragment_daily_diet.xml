@@ -4,4 +4,70 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin">
 
+    <Spinner
+        android:id="@+id/spinnerFoodCategories"
+        android:layout_width="106dp"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="223dp"
+        android:layout_marginLeft="223dp"
+        android:layout_marginTop="149dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginRight="66dp" />
+
+    <Spinner
+        android:id="@+id/spinnerFoodItems"
+        android:layout_width="98dp"
+        android:layout_height="34dp"
+        android:layout_alignTop="@+id/spinnerFoodCategories"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="225dp"
+        android:layout_marginLeft="225dp"
+        android:layout_marginTop="-89dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginRight="72dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="133dp"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="124dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginTop="208dp"
+        android:text="Add Food" />
+
+    <TextView
+        android:id="@+id/txtFoodCategories"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="74dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/txtFoodItem"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="71dp"
+        android:layout_marginLeft="71dp"
+        android:layout_marginTop="160dp"
+        android:text="TextView" />
+
 </RelativeLayout>
