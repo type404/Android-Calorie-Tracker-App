@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
 //                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //                Fragment fragment = MainFragment.newInstance(loggedInUser);
-//                ft.replace(R.id.main_fragment_frame, fragment);
+//                ft.replace(R.id.content_frame, fragment);
 //                ft.commit();
             }
            else

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.calorietracker">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -9,12 +10,26 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Mapsscreen"
+            android:label="@string/title_activity_mapsscreen"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Mainhome"
+            android:label="@string/title_activity_mainhome"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity -->
+        <!-- android:name=".Homescreen_activity" -->
+        <!-- android:label="@string/title_activity_homescreen"> -->
+        <!-- &lt;!&ndash;<meta-data&ndash;&gt; -->
+        <!-- &lt;!&ndash;android:name="android.support.PARENT_ACTIVITY"&ndash;&gt; -->
+        <!-- &lt;!&ndash;android:value=".Homescreen" />&ndash;&gt; -->
+        <!-- </activity> -->
         <activity
             android:name=".Homescreen"
             android:label="@string/title_activity_homescreen"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SignUp"
             android:windowSoftInputMode="stateHidden|adjustPan" />

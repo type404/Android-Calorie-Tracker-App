@@ -2,20 +2,59 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/fragment_main"
         android:padding="@dimen/activity_horizontal_margin">
-    <FrameLayout
-        android:id="@+id/main_fragment_frame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/welcomeMessage"
-        android:text=""/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:text=""
+        android:textColor="	#000000"
+        android:textColorLink="#8C229E" />
+    <TextView
+        android:id="@+id/currDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text=""
+        android:textColor="	#000000"
+        android:textStyle="bold"
+        android:textColorLink="#8C229E" />
+
     <ImageView
-        android:id="@+id/image_view"
+        android:id="@+id/image1"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/fitness_pic"/>
-    </FrameLayout>
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="200dp"
+        android:src="@drawable/fitness_pic" />
+
+    <TextView
+        android:id="@+id/setCalGoal"
+        android:layout_width="183dp"
+        android:layout_height="37dp"
+        android:layout_alignEnd="@+id/welcomeMessage"
+        android:layout_marginTop="400dp"
+        android:layout_marginEnd="9dp"
+        android:text=" "
+        android:textSize="16dip" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_updateCalGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="214dp"
+        android:gravity="center_vertical"
+        android:text="Update Cal Goals" />
 </RelativeLayout>

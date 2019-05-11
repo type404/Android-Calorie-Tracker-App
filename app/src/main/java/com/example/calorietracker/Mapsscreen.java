@@ -1,11 +1,12 @@
 package com.example.calorietracker;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
@@ -15,79 +16,25 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-public class Homescreen extends AppCompatActivity
+public class Mapsscreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-//    TextView welcomeText;
-//    TextView calGoals;
-    Integer userId;
-    String uName;
-    String getCalGoals;
-    String curr_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homescreen);
+        setContentView(R.layout.activity_mapsscreen);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView)
-                findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        getSupportActionBar().setTitle("Calorie Tracker");
-
-//      welcomeText = findViewById(R.id.welcomeMessage);
-        Bundle bundle = getIntent().getExtras();
-        Users aUser = bundle.getParcelable("loggedInUser");
-        uName = aUser.getFirstname();
-        userId = aUser.getUserId();
- //       welcomeText.setText("Welcome " + name);
-
-        curr_date = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
-//        TextView date = (TextView) findViewById(R.id.currDate);
-//        date.setText(curr_date);
-
-//        calGoals = findViewById(R.id.setCalGoal);
-        UserGetReportAsyncTask userReport = new UserGetReportAsyncTask();
-        userReport.execute();
-
-
-
     }
-
-    private class UserGetReportAsyncTask extends AsyncTask<Void, Void, String> {
-        @Override
-        protected String doInBackground(Void... v) {
-            return RestClient.getReportFromUserId(userId);
-        }
-
-        @Override
-        protected void onPostExecute(String json) {
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-            ReportNetbeans rn = gson.fromJson(json, ReportNetbeans.class);
-            getCalGoals = rn.getSetCalsGoal().toString();
-//           calGoals.setText(getCalGoals);
-//            getCalGoals = rn.getSetCalsGoal().toString();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                Fragment fragment = MainFragment.newInstance(uName,getCalGoals,curr_date);
-                ft.replace(R.id.content_frame, fragment);
-                ft.commit();
-        }
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -129,7 +76,12 @@ public class Homescreen extends AppCompatActivity
         Fragment nextFragment = null;
         switch (id) {
             case R.id.nav_home:
-                nextFragment = new MainFragment();
+                Intent intent = new Intent(Mapsscreen.this, Homescreen.class);
+//                Bundle bundle = getIntent().getExtras();
+//                Users aUser = bundle.getParcelable("loggedInUser");
+//                bundle.putParcelable("loggedInUser",aUser);
+//                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
             case R.id.nav_daily_diet:
                 nextFragment = new DailyDietFragment();
@@ -141,7 +93,7 @@ public class Homescreen extends AppCompatActivity
                 nextFragment = new Report();
                 break;
             case R.id.nav_maps:
-                Intent i = new Intent(Homescreen.this, Mapsscreen.class);
+                Intent i = new Intent(Mapsscreen.this, Mapsscreen.class);
                 startActivity(i);
                 break;
         }
@@ -152,5 +104,4 @@ public class Homescreen extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

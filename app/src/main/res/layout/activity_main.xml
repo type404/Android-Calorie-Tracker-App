@@ -52,4 +52,9 @@
         android:text="No account yet? Create one"
         android:gravity="center"
         android:textSize="16dip"/>
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="68dp" />
 </LinearLayout>

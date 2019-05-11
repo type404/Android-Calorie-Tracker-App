@@ -10,12 +10,18 @@ import android.widget.TextView;
 public class MainFragment extends Fragment {
     View vMain;
     TextView welcomeText;
+    TextView setCalGoal;
+    TextView currDate;
+
     private Users aUser;
 
-    public static MainFragment newInstance(Users user){
+
+    public static MainFragment newInstance(String username, String calGoals, String currDate){
         MainFragment fragment = new MainFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("logged Users", user);
+        bundle.putString("loggedUname", username);
+        bundle.putString("loggedUCalGoals", calGoals);
+        bundle.putString("currDate",currDate);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -24,11 +30,15 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         vMain = inflater.inflate(R.layout.fragment_main, container, false);
-
         welcomeText = (TextView) vMain.findViewById(R.id.welcomeMessage);
-        aUser = (Users) getArguments().getParcelable("logged Users");
-        String name = aUser.getFirstname();
-        welcomeText.setText("Welcome " + name);
+        setCalGoal = (TextView) vMain.findViewById(R.id.setCalGoal);
+        currDate = (TextView) vMain.findViewById(R.id.currDate);
+        String uName = (String) getArguments().getString("loggedUname");
+        String uCG = (String) getArguments().getString("loggedUCalGoals");
+        String uDate = (String) getArguments().getString("currDate");
+        welcomeText.setText("Welcome " + uName);
+        setCalGoal.setText(uCG);
+        currDate.setText(uDate);
         return vMain;
     }
 }
