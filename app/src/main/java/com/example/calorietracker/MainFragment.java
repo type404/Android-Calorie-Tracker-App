@@ -37,7 +37,7 @@ public class MainFragment extends Fragment {
         String uCG = (String) getArguments().getString("loggedUCalGoals");
         String uDate = (String) getArguments().getString("currDate");
         welcomeText.setText("Welcome: " + uName);
-        setCalGoal.setText("Your set Cal Goals: " + uCG);
+        setCalGoal.setText("Your Calorie Goals Set is: " + uCG);
         currDate.setText(uDate);
         return vMain;
     }

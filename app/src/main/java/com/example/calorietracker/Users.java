@@ -49,7 +49,6 @@ public class Users implements Parcelable {
         this.stepsPerMile = stepsPerMile;
     }
 
-    private static long idCounter = 6;
 
     protected Users(Parcel in) {
         if (in.readByte() == 0) {
@@ -82,8 +81,9 @@ public class Users implements Parcelable {
         }
     };
 
-    public static synchronized String createID()
+    public static String createID()
     {
+        Integer idCounter = 6;
         return String.valueOf(idCounter++);
     }
 

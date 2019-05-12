@@ -81,36 +81,41 @@
             android:layout_height="wrap_content"
             android:text="Food Desc: " />
         <TextView
-            android:id="@+id/txtFoodCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Food Category: " />
-        <TextView
             android:id="@+id/txtFoodCalAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Food Calorie Amount: " />
-        <TextView
-            android:id="@+id/txtFoodServUnit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Serving Unit: " />
-        <TextView
-            android:id="@+id/txtServAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Serving Amount: " />
         <TextView
             android:id="@+id/txtFatAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Food Fat Amount: " />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:layout_gravity="center_horizontal">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+    <EditText
+        android:id="@+id/foodQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="Add quantity consumed"
+        android:inputType="number" />
     <Button
         android:id="@+id/buttonAddFood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingTop="15dp"
+        android:paddingLeft="20dp"
         android:text="Add to diary" />
+    </LinearLayout>
 </LinearLayout>

@@ -94,4 +94,9 @@ public class Consumption {
         return "restws.Consumption[ consId=" + consId + " ]";
     }
 
+    public static Integer createID()
+    {
+        Integer idCounter = 120;
+        return idCounter++;
+    }
 }

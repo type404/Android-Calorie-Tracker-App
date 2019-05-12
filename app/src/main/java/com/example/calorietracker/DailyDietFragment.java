@@ -20,8 +20,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DailyDietFragment extends Fragment {
     View vDailyDiet;
@@ -30,6 +32,7 @@ public class DailyDietFragment extends Fragment {
     String spinnerItemValue;
     String spinnerItemValueFood;
     Button buttonCreateFood;
+    Button buttonAddFood;
     String newFood;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
@@ -37,6 +40,7 @@ public class DailyDietFragment extends Fragment {
         vFoodCategories = vDailyDiet.findViewById(R.id.spinnerFoodCategories);
         vFoodItems = vDailyDiet.findViewById(R.id.spinnerFoodItems);
         buttonCreateFood = vDailyDiet.findViewById(R.id.buttonCreateFood);
+        buttonAddFood = vDailyDiet.findViewById(R.id.buttonAddFood);
         List<String> list = new ArrayList<>();
         list.add("Cereals");
         list.add("Dessert");
@@ -70,9 +74,20 @@ public class DailyDietFragment extends Fragment {
                 newFood = ((EditText) vDailyDiet.findViewById(R.id.findNewFood)).getText().toString();
                 SearchAsyncTask searchAsyncTask=new SearchAsyncTask();
                 searchAsyncTask.execute(newFood);
+                FoodInfoAsyncTask foodInfoAsyncTask=new FoodInfoAsyncTask();
+                foodInfoAsyncTask.execute(newFood);
+            }
+        });
+        buttonAddFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateConsAsyncTask uaf = new UpdateConsAsyncTask();
+                uaf.execute();
             }
         });
         return vDailyDiet;
+
+
     }
     private class GetFoodItemsAsyncTask extends AsyncTask<Void, Void, String> {
         @Override
@@ -123,5 +138,34 @@ public class DailyDietFragment extends Fragment {
             tv.setText(desc+".");
         }
     }
-
+    private class FoodInfoAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            return FoodSearchAPI.searchFood(params[0]);
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            TextView tvCal= (TextView) vDailyDiet.findViewById(R.id.txtFoodCalAmount);
+            TextView tvFat= (TextView) vDailyDiet.findViewById(R.id.txtFatAmount);
+            String[] foodData = FoodSearchAPI.getFoodCalsAndFat(result);
+            tvCal.setText("Calories: "+foodData[0]);
+            tvFat.setText("Fat Amount: "+foodData[1]);
+        }
+    }
+    private class UpdateConsAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            return RestClient.getFoodItems(spinnerItemValue);
+        }
+        @Override
+        protected void onPostExecute(String json) {
+            Gson gson = new GsonBuilder().create();
+            Food[] foodItem = gson.fromJson(json, Food[].class);
+            String etQty = ((EditText) vDailyDiet.findViewById(R.id.foodQty)).getText().toString();
+                Integer foodId = foodItem[0].getFoodId();
+                Integer userId = Homescreen.getCurrUserId();
+                Integer consId = 120;
+                String curr_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new java.util.Date());
+            }
+        }
 }

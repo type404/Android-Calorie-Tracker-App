@@ -28,7 +28,7 @@ public class Homescreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 //    TextView welcomeText;
 //    TextView calGoals;
-    Integer userId;
+static Integer userId;
     String uName;
     String getCalGoals;
     String curr_date;
@@ -79,8 +79,6 @@ public class Homescreen extends AppCompatActivity
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             ReportNetbeans rn = gson.fromJson(json, ReportNetbeans.class);
             getCalGoals = rn.getSetCalsGoal().toString();
-//           calGoals.setText(getCalGoals);
-//            getCalGoals = rn.getSetCalsGoal().toString();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 Fragment fragment = MainFragment.newInstance(uName,getCalGoals,curr_date);
                 ft.replace(R.id.content_frame, fragment);
@@ -152,5 +150,8 @@ public class Homescreen extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+    //returns the userId for the logged in User
+    public static int getCurrUserId(){
+        return userId;
+    }
 }
