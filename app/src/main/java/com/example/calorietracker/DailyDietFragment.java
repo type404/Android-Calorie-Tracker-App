@@ -9,11 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +26,17 @@ import java.util.List;
 public class DailyDietFragment extends Fragment {
     View vDailyDiet;
     Spinner vFoodCategories;
+    Spinner vFoodItems;
     String spinnerItemValue;
+    String spinnerItemValueFood;
+    Button buttonCreateFood;
+    String newFood;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         vDailyDiet = inflater.inflate(R.layout.fragment_daily_diet, container, false);
         vFoodCategories = vDailyDiet.findViewById(R.id.spinnerFoodCategories);
+        vFoodItems = vDailyDiet.findViewById(R.id.spinnerFoodItems);
+        buttonCreateFood = vDailyDiet.findViewById(R.id.buttonCreateFood);
         List<String> list = new ArrayList<>();
         list.add("Cereals");
         list.add("Dessert");
@@ -53,6 +64,14 @@ public class DailyDietFragment extends Fragment {
 
             }
         });
+        buttonCreateFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newFood = ((EditText) vDailyDiet.findViewById(R.id.findNewFood)).getText().toString();
+                SearchAsyncTask searchAsyncTask=new SearchAsyncTask();
+                searchAsyncTask.execute(newFood);
+            }
+        });
         return vDailyDiet;
     }
     private class GetFoodItemsAsyncTask extends AsyncTask<Void, Void, String> {
@@ -65,9 +84,44 @@ public class DailyDietFragment extends Fragment {
         protected void onPostExecute(String json) {
             Gson gson = new GsonBuilder().create();
             Food[] foodItem = gson.fromJson(json, Food[].class);
-            foodItem[0].getFoodName();
-            foodItem[1].getFoodName();
+            List<String> list = new ArrayList<>();
+            for(int i = 0; i < foodItem.length; i++){
+                String itemname = foodItem[i].getFoodName();
+                list.add(itemname);
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(vDailyDiet.getContext(), android.R.layout.simple_spinner_item, list);
+            adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            vFoodItems.setAdapter(adapter);
+            vFoodItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    spinnerItemValueFood = parent.getItemAtPosition(position).toString();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
             }
         }
+    private class SearchAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            return searchAPI.searchDescription(params[0], new String[]{"num"}, new
+                    String[]{"1"});
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            TextView tv= (TextView) vDailyDiet.findViewById(R.id.txtFoodDesc);
+            String desc = "Food Desc: " + (searchAPI.getSnippet(result));
+            String imageURL = searchAPI.getImageURL(result);
+            ImageView iv = (ImageView) vDailyDiet.findViewById(R.id.imageFood);
+            Picasso.with(vDailyDiet.getContext()).load(imageURL).into(iv);
+            int i = desc.indexOf(".");
+            desc = desc.substring(0,i);
+            tv.setText(desc+".");
+        }
+    }
 
 }

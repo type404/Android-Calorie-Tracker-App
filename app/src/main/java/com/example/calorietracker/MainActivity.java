@@ -65,10 +65,6 @@ public class MainActivity extends AppCompatActivity {
                     bundle.putParcelable("loggedInUser",loggedInUser);
                     intent.putExtras(bundle);
                     startActivity(intent);
-//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                Fragment fragment = MainFragment.newInstance(loggedInUser);
-//                ft.replace(R.id.content_frame, fragment);
-//                ft.commit();
             }
            else
             {

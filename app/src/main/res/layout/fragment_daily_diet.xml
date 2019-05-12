@@ -1,73 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin">
-
-    <Spinner
-        android:id="@+id/spinnerFoodCategories"
-        android:layout_width="106dp"
-        android:layout_height="35dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="223dp"
-        android:layout_marginLeft="223dp"
-        android:layout_marginTop="149dp"
-        android:layout_marginEnd="66dp"
-        android:layout_marginRight="66dp" />
-
-    <Spinner
-        android:id="@+id/spinnerFoodItems"
-        android:layout_width="98dp"
-        android:layout_height="34dp"
-        android:layout_alignTop="@+id/spinnerFoodCategories"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="225dp"
-        android:layout_marginLeft="225dp"
-        android:layout_marginTop="-89dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginRight="72dp" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="133dp"
-        android:layout_height="38dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="124dp"
-        android:layout_marginLeft="124dp"
-        android:layout_marginTop="208dp"
-        android:text="Add Food" />
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <TextView
         android:id="@+id/txtFoodCategories"
-        android:layout_width="103dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="56dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginTop="74dp"
-        android:text="TextView" />
+        android:text="Choose Food Category: " />
 
-    <TextView
-        android:id="@+id/txtFoodItem"
-        android:layout_width="103dp"
+        <Spinner
+            android:id="@+id/spinnerFoodCategories"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="71dp"
-        android:layout_marginLeft="71dp"
-        android:layout_marginTop="160dp"
-        android:text="TextView" />
+        android:orientation="horizontal">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/txtFoodItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Food Item: " />
+
+        <Spinner
+            android:id="@+id/spinnerFoodItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="52dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+    <EditText
+        android:id="@+id/findNewFood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Find New Food"
+        android:inputType="textAutoComplete" />
+        <Button
+            android:id="@+id/buttonCreateFood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Find" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageFood"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/fitness_pic" />
+        <TextView
+            android:id="@+id/txtFoodDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Food Desc: " />
+        <TextView
+            android:id="@+id/txtFoodCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Food Category: " />
+        <TextView
+            android:id="@+id/txtFoodCalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Food Calorie Amount: " />
+        <TextView
+            android:id="@+id/txtFoodServUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Serving Unit: " />
+        <TextView
+            android:id="@+id/txtServAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Serving Amount: " />
+        <TextView
+            android:id="@+id/txtFatAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Food Fat Amount: " />
+    </LinearLayout>
+    <Button
+        android:id="@+id/buttonAddFood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="15dp"
+        android:text="Add to diary" />
+</LinearLayout>
