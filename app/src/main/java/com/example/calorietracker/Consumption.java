@@ -23,8 +23,10 @@ public class Consumption {
         this.consId = consId;
     }
 
-    public Consumption(Integer consId, Date consDate, int quantity) {
+    public Consumption(Integer consId, Users user, Food food, Date consDate, int quantity) {
         this.consId = consId;
+        this.userId = user;
+        this.foodId = food;
         this.consDate = consDate;
         this.quantity = quantity;
     }

@@ -1,9 +1,12 @@
 package com.example.calorietracker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +21,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.squareup.picasso.Picasso;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +39,8 @@ public class DailyDietFragment extends Fragment {
     Button buttonCreateFood;
     Button buttonAddFood;
     String newFood;
+    String servingUnit;
+    Integer servingAmount;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         vDailyDiet = inflater.inflate(R.layout.fragment_daily_diet, container, false);
@@ -50,6 +57,7 @@ public class DailyDietFragment extends Fragment {
         list.add("Nuts");
         list.add("Poultry");
         list.add("Vegetables");
+        list.add("Bread");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(vDailyDiet.getContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -99,6 +107,8 @@ public class DailyDietFragment extends Fragment {
         protected void onPostExecute(String json) {
             Gson gson = new GsonBuilder().create();
             Food[] foodItem = gson.fromJson(json, Food[].class);
+            servingAmount = foodItem[0].getServingAmount();
+            servingUnit = foodItem[0].getServingUnit();
             List<String> list = new ArrayList<>();
             for(int i = 0; i < foodItem.length; i++){
                 String itemname = foodItem[i].getFoodName();
@@ -136,6 +146,7 @@ public class DailyDietFragment extends Fragment {
             int i = desc.indexOf(".");
             desc = desc.substring(0,i);
             tv.setText(desc+".");
+
         }
     }
     private class FoodInfoAsyncTask extends AsyncTask<String, Void, String> {
@@ -150,6 +161,8 @@ public class DailyDietFragment extends Fragment {
             String[] foodData = FoodSearchAPI.getFoodCalsAndFat(result);
             tvCal.setText("Calories: "+foodData[0]);
             tvFat.setText("Fat Amount: "+foodData[1]);
+            UpdateFoodTableAsyncTask updateFoodTableAsyncTask = new UpdateFoodTableAsyncTask();
+            updateFoodTableAsyncTask.execute(foodData[0],foodData[1]);
         }
     }
     private class UpdateConsAsyncTask extends AsyncTask<String, Void, String> {
@@ -162,10 +175,55 @@ public class DailyDietFragment extends Fragment {
             Gson gson = new GsonBuilder().create();
             Food[] foodItem = gson.fromJson(json, Food[].class);
             String etQty = ((EditText) vDailyDiet.findViewById(R.id.foodQty)).getText().toString();
+            Integer qty = Integer.parseInt(etQty);
                 Integer foodId = foodItem[0].getFoodId();
-                Integer userId = Homescreen.getCurrUserId();
-                Integer consId = 120;
-                String curr_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new java.util.Date());
+                SharedPreferences spUserData = getActivity().getSharedPreferences("User_File", Context.MODE_PRIVATE);
+                Integer userId = spUserData.getInt("user_id",0);
+                String consId = RestClient.getCount("consumption");
+                Integer cId = 1;
+                PostConsAsyncTask pcat = new PostConsAsyncTask();
+                pcat.execute(cId,userId,foodId,qty);
             }
         }
+
+    private class PostConsAsyncTask extends AsyncTask<Integer, Void, String>
+    {
+        @Override
+        protected String doInBackground(Integer... params) {
+            Users user1;
+            Food food1;
+            String curr_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new java.util.Date());
+            String user = RestClient.getUserByUserId(params[1]);
+            String food = RestClient.getFoodByFoodId(params[2]);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+            try {
+                user1 = gson.fromJson(user, Users.class);
+                Log.i("user", String.valueOf(user1));
+                food1 = gson.fromJson(food, Food.class);
+                Log.d("food", String.valueOf(food1));
+            } catch (IllegalStateException | JsonSyntaxException exception){
+                return "Update Fail";
+            }
+            Consumption consumption=new Consumption(params[0],user1,food1, Date.valueOf(curr_date),params[3]);
+            RestClient.createConsumption(consumption);
+            return "Your consumption updated";
+        }
+        @Override
+        protected void onPostExecute(String response) {
+           Toast.makeText(vDailyDiet.getContext(),response,Toast.LENGTH_LONG).show();
+        }
+    }
+    private class UpdateFoodTableAsyncTask extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... params) {
+            Food food = new Food(Food.createID(),newFood,spinnerItemValue,Integer.parseInt(params[0]),servingUnit,servingAmount,Integer.parseInt(params[0]));
+            RestClient.createFood(food);
+              return "New food item was added to the list!";
+        }
+        @Override
+        protected void onPostExecute(String response) {
+            Toast.makeText(vDailyDiet.getContext(),response,Toast.LENGTH_LONG).show();
+        }
+    }
 }

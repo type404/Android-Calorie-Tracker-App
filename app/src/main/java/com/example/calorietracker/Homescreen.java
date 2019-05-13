@@ -1,6 +1,8 @@
 package com.example.calorietracker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,9 +28,7 @@ import java.util.Locale;
 
 public class Homescreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-//    TextView welcomeText;
-//    TextView calGoals;
-static Integer userId;
+    Integer userId;
     String uName;
     String getCalGoals;
     String curr_date;
@@ -48,23 +48,20 @@ static Integer userId;
                 findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         getSupportActionBar().setTitle("Calorie Tracker");
-
-//      welcomeText = findViewById(R.id.welcomeMessage);
         Bundle bundle = getIntent().getExtras();
         Users aUser = bundle.getParcelable("loggedInUser");
         uName = aUser.getFirstname();
         userId = aUser.getUserId();
- //       welcomeText.setText("Welcome " + name);
 
         curr_date = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
-//        TextView date = (TextView) findViewById(R.id.currDate);
-//        date.setText(curr_date);
-
-//        calGoals = findViewById(R.id.setCalGoal);
         UserGetReportAsyncTask userReport = new UserGetReportAsyncTask();
         userReport.execute();
 
-
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("User_File", Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sharedPref.edit();
+        ed.putInt("user_id",userId);
+        ed.putString("cal_goals",getCalGoals);
+        ed.commit();
 
     }
 
@@ -149,9 +146,5 @@ static Integer userId;
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-    //returns the userId for the logged in User
-    public static int getCurrUserId(){
-        return userId;
     }
 }

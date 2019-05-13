@@ -1,5 +1,7 @@
 package com.example.calorietracker;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,9 +14,6 @@ public class MainFragment extends Fragment {
     TextView welcomeText;
     TextView setCalGoal;
     TextView currDate;
-
-    private Users aUser;
-
 
     public static MainFragment newInstance(String username, String calGoals, String currDate){
         MainFragment fragment = new MainFragment();
@@ -41,4 +40,5 @@ public class MainFragment extends Fragment {
         currDate.setText(uDate);
         return vMain;
     }
+
 }
