@@ -161,8 +161,8 @@ public class DailyDietFragment extends Fragment {
             String[] foodData = FoodSearchAPI.getFoodCalsAndFat(result);
             tvCal.setText("Calories: "+foodData[0]);
             tvFat.setText("Fat Amount: "+foodData[1]);
-            UpdateFoodTableAsyncTask updateFoodTableAsyncTask = new UpdateFoodTableAsyncTask();
-            updateFoodTableAsyncTask.execute(foodData[0],foodData[1]);
+//            UpdateFoodTableAsyncTask updateFoodTableAsyncTask = new UpdateFoodTableAsyncTask();
+//            updateFoodTableAsyncTask.execute(foodData[0],foodData[1]);
         }
     }
     private class UpdateConsAsyncTask extends AsyncTask<String, Void, String> {
@@ -213,17 +213,17 @@ public class DailyDietFragment extends Fragment {
            Toast.makeText(vDailyDiet.getContext(),response,Toast.LENGTH_LONG).show();
         }
     }
-    private class UpdateFoodTableAsyncTask extends AsyncTask<String, Void, String>
-    {
-        @Override
-        protected String doInBackground(String... params) {
-            Food food = new Food(Food.createID(),newFood,spinnerItemValue,Integer.parseInt(params[0]),servingUnit,servingAmount,Integer.parseInt(params[0]));
-            RestClient.createFood(food);
-              return "New food item was added to the list!";
-        }
-        @Override
-        protected void onPostExecute(String response) {
-            Toast.makeText(vDailyDiet.getContext(),response,Toast.LENGTH_LONG).show();
-        }
-    }
+//    private class UpdateFoodTableAsyncTask extends AsyncTask<String, Void, String>
+//    {
+//        @Override
+//        protected String doInBackground(String... params) {
+//            Food food = new Food(Food.createID(),newFood,spinnerItemValue,Integer.parseInt(params[0]),servingUnit,servingAmount,Integer.parseInt(params[0]));
+//            RestClient.createFood(food);
+//              return "New food item was added to the list!";
+//        }
+//        @Override
+//        protected void onPostExecute(String response) {
+//            Toast.makeText(vDailyDiet.getContext(),response,Toast.LENGTH_LONG).show();
+//        }
+//    }
 }

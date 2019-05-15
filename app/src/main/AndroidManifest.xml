@@ -12,20 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".Mapsscreen"
-            android:label="@string/title_activity_mapsscreen"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Mainhome"
-            android:label="@string/title_activity_mainhome"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity -->
-        <!-- android:name=".Homescreen_activity" -->
-        <!-- android:label="@string/title_activity_homescreen"> -->
-        <!-- &lt;!&ndash;<meta-data&ndash;&gt; -->
-        <!-- &lt;!&ndash;android:name="android.support.PARENT_ACTIVITY"&ndash;&gt; -->
-        <!-- &lt;!&ndash;android:value=".Homescreen" />&ndash;&gt; -->
-        <!-- </activity> -->
+        <activity android:name=".MapActivity"
+            android:parentActivityName=".Homescreen">
+        </activity>
         <activity
             android:name=".Homescreen"
             android:label="@string/title_activity_homescreen"
@@ -40,6 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <uses-library
+            android:name="org.apache.http.legacy" android:required="false" />
     </application>
 
 </manifest>

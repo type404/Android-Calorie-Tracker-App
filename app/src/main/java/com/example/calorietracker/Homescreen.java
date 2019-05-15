@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -136,8 +137,8 @@ public class Homescreen extends AppCompatActivity
                 nextFragment = new Report();
                 break;
             case R.id.nav_maps:
-                Intent i = new Intent(Homescreen.this, Mapsscreen.class);
-                startActivity(i);
+//                Intent intent = new Intent(Homescreen.this, MapActivity.class);
+//                startActivity(intent);
                 break;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();

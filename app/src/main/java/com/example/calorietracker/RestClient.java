@@ -42,7 +42,7 @@ public class RestClient {
             conn.setRequestMethod("GET");
             //add http headers to set your response type to text plain
             conn.setRequestProperty("Content-Type", "text/plain");
-            conn.setRequestProperty("Accept", "text/plain");
+//            conn.setRequestProperty("Accept", "text/plain");
             //Read the response
             Scanner inStream = new Scanner(conn.getInputStream());
             //read the input stream and store it as string
