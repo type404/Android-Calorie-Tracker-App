@@ -62,6 +62,8 @@ public class Homescreen extends AppCompatActivity
         SharedPreferences.Editor ed = sharedPref.edit();
         ed.putInt("user_id",userId);
         ed.putString("cal_goals",getCalGoals);
+        ed.putString("user_address",aUser.getAddress());
+        ed.putString("user_postcode",aUser.getPostcode());
         ed.commit();
 
     }
@@ -137,9 +139,9 @@ public class Homescreen extends AppCompatActivity
                 nextFragment = new Report();
                 break;
             case R.id.nav_maps:
-//                Intent intent = new Intent(Homescreen.this, MapActivity.class);
-//                startActivity(intent);
-                break;
+                Intent intent = new Intent(Homescreen.this, MapActivity.class);
+                startActivity(intent);
+                return true;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
         assert nextFragment != null;

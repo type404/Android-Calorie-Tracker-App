@@ -55,20 +55,22 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String json) {
-            String pwHash = Credential.passHashConverter(tmpPw);
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-            Credential userCredential = gson.fromJson(json, Credential.class);
-            Users loggedInUser = userCredential.getUserId();
-            if (pwHash.equals(userCredential.getPasswordHash())) {
-               Intent intent = new Intent(MainActivity.this, Homescreen.class);
+            if (json != null) {
+                String pwHash = Credential.passHashConverter(tmpPw);
+                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                Credential userCredential = gson.fromJson(json, Credential.class);
+                Users loggedInUser = userCredential.getUserId();
+                if (pwHash.equals(userCredential.getPasswordHash())) {
+                    Intent intent = new Intent(MainActivity.this, Homescreen.class);
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable("loggedInUser",loggedInUser);
+                    bundle.putParcelable("loggedInUser", loggedInUser);
                     intent.putExtras(bundle);
                     startActivity(intent);
-            }
-           else
-            {
-                Toast.makeText(getApplicationContext(),"Login Failed!",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Wrong user id and password!", Toast.LENGTH_LONG).show();
             }
         }
     }

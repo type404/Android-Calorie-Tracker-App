@@ -20,8 +20,8 @@ public class RestClient {
         return s;
     }
     //get Count from the tables
-    public static String getCount(String tablename) {
-        final String methodPath = "restws." + tablename + "/count";
+    public static String getMaxId(String tablename) {
+        final String methodPath = "restws." + tablename + "/findByMaxId";
         //initialise
         String s = HTTPConnectionText(methodPath);
         return s;
@@ -41,8 +41,7 @@ public class RestClient {
             //set the connection method to GET
             conn.setRequestMethod("GET");
             //add http headers to set your response type to text plain
-            conn.setRequestProperty("Content-Type", "text/plain");
-//            conn.setRequestProperty("Accept", "text/plain");
+              conn.setRequestProperty("Content-Type", "text/plain");
             //Read the response
             Scanner inStream = new Scanner(conn.getInputStream());
             //read the input stream and store it as string
