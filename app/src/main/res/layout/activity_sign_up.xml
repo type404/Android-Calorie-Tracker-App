@@ -10,6 +10,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="2dp"
+    android:background="@drawable/bg"
     android:paddingTop="2dp">
 
     <!--Name Label-->

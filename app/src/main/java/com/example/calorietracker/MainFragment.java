@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainFragment extends Fragment {
@@ -19,6 +22,8 @@ public class MainFragment extends Fragment {
     TextView totalStepsTaken;
     TextView totalCalsConsumed;
     TextView totalCalsBurnt;
+    Button btn_updateCalGoal;
+    EditText etUpdateCalGoal;
 
     public static MainFragment newInstance(String username, String calGoals, String currDate) {
         MainFragment fragment = new MainFragment();
@@ -40,13 +45,26 @@ public class MainFragment extends Fragment {
         totalStepsTaken = (TextView) vMain.findViewById(R.id.totalStepsTaken);
         totalCalsBurnt = (TextView) vMain.findViewById(R.id.totalCalsBurnt);
         totalCalsConsumed = (TextView) vMain.findViewById(R.id.totalCalsConsumed);
+        btn_updateCalGoal = vMain.findViewById(R.id.btn_updateCalGoal);
+        etUpdateCalGoal = vMain.findViewById(R.id.text_updateCalGoal);
         String uName = (String) getArguments().getString("loggedUname");
         String uCG = (String) getArguments().getString("loggedUCalGoals");
         String uDate = (String) getArguments().getString("currDate");
         ReportAsyncTask reportAsyncTask = new ReportAsyncTask();
         reportAsyncTask.execute(uDate);
         welcomeText.setText("Welcome: " + uName);
-        setCalGoal.setText("Your Calorie Goals Set is: " + uCG);
+        setCalGoal.setText(uCG);
+        btn_updateCalGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String calGoals = etUpdateCalGoal.getText().toString();
+                setCalGoal.setText(calGoals);
+                SharedPreferences sharedPref = vMain.getContext().getSharedPreferences("User_CalGoal", Context.MODE_PRIVATE);
+                SharedPreferences.Editor ed = sharedPref.edit();
+                ed.putString("updated_cal_goals",calGoals);
+                ed.commit();
+            }
+        });
         currDate.setText(uDate);
 
         return vMain;

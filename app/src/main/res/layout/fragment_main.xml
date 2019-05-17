@@ -41,58 +41,88 @@
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/fitness_pic" />
-    <TextView
-        android:id="@+id/setCalGoal"
-        android:layout_width="363dp"
-        android:layout_height="34dp"
-        android:text="Dummy"
-        android:textSize="16dip" />
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/setCalGoalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:text="Your set Cal Goals: "
+            android:textColor="#000"
+            android:clickable="true"
+            android:textSize="16dip" />
+        <TextView
+            android:id="@+id/setCalGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:textColor="#000"
+            android:text="Dummy"
+            android:clickable="true"
+            android:textSize="16dip" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
             <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
+                android:id="@+id/tilCalGoals"
+                android:layout_width="242dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"/>
-            <EditText
-                android:id="@+id/etCalGoalUpdate"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:id="@+id/text_updateCalGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Set new Calorie goals?!"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_updateCalGoal"
                 android:layout_width="wrap_content"
+                android:background="@drawable/button_shape"
+                android:layout_marginTop="15dp"
                 android:layout_height="wrap_content"
-                android:hint="Update Cal Goal"
-                android:inputType="textAutoComplete" />
-        <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btn_updateCalGoal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="Update" />
-</LinearLayout>
+                android:gravity="center_horizontal"
+                android:textSize="20sp"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:paddingTop="10dp"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="Update" />
+        </LinearLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginLeft="5dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/totalStepsTaken"
-            android:layout_width="363dp"
+            android:layout_width="wrap_content"
             android:layout_height="34dp"
+            android:textColor="#000"
             android:text="Dummy"
             android:textSize="16dip" />
         <TextView
             android:id="@+id/totalCalsConsumed"
-            android:layout_width="363dp"
+            android:layout_width="wrap_content"
             android:layout_height="34dp"
+            android:textColor="#000"
             android:text="Dummy"
             android:textSize="16dip" />
         <TextView
             android:id="@+id/totalCalsBurnt"
-            android:layout_width="363dp"
+            android:layout_width="wrap_content"
             android:layout_height="34dp"
+            android:textColor="#000"
             android:text="Dummy"
             android:textSize="16dip" />
     </LinearLayout>
