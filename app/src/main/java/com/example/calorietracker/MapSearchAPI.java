@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MapSearchAPI {
@@ -37,7 +38,7 @@ public class MapSearchAPI {
         HttpURLConnection connection = null;
         String textResult = "";
         try {
-            url = new URL("https://www.mapquestapi.com/search/v2/radius?origin="+postcode+"&radius=3.10&maxMatches=10&ambiguities=ignore&hostedData=mqap.ntpois|group_sic_code=?|799951&outFormat=json&key=");
+            url = new URL("https://www.mapquestapi.com/search/v2/radius?origin="+postcode+"&radius=3.10&maxMatches=10&ambiguities=ignore&hostedData=mqap.ntpois|group_sic_code=?|799951&outFormat=json&key="+API_KEY);
             connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);
@@ -66,6 +67,23 @@ public class MapSearchAPI {
                 snippet[0] = jsonObject1.getString("lat");
                 snippet[1] = jsonObject1.getString("lng");
 
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            snippet[0] = "NO INFO FOUND";
+        }
+        return snippet;
+    }
+
+    public static String[] getLatLongParks(String result, Integer j){
+        String[] snippet = new String[2];
+        try{
+            JSONObject jsonObject = new JSONObject(result);
+            JSONArray jsonArray = jsonObject.getJSONArray("searchResults");
+            if(jsonArray != null && jsonArray.length() > 0) {
+                    JSONArray jsonArray1 = jsonArray.getJSONObject(j).getJSONArray("shapePoints");
+                    snippet[0] = jsonArray1.getString(0);
+                    snippet[1] = jsonArray1.getString(1);
             }
         }catch (Exception e){
             e.printStackTrace();
