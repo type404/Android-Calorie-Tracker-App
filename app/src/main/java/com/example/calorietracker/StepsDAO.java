@@ -17,9 +17,11 @@ public interface StepsDAO {
     List<StepsTable> getAll();
     @Query("SELECT * FROM stepstable WHERE time LIKE :time AND " +
             "steps_Taken LIKE :steps LIMIT 1")
-    StepsTable findByTimeAndSteps(String time, String steps);
+    StepsTable findByTimeAndSteps(String time, Integer steps);
     @Query("SELECT * FROM stepsTable WHERE sid = :stepsTableId LIMIT 1")
     StepsTable findByID(int stepsTableId);
+    @Query("SELECT SUM(steps_Taken) FROM stepsTable")
+    Integer findStepsTaken();
     @Insert
     void insertAll(StepsTable... stepsTables);
     @Insert

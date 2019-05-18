@@ -13,8 +13,8 @@ public class StepsTable {
     @ColumnInfo(name = "time")
     public String time;
     @ColumnInfo(name = "steps_Taken")
-    public String steps;
-    public StepsTable(String time, String steps) {
+    public Integer steps;
+    public StepsTable(String time, Integer steps) {
         this.time = time;
         this.steps = steps;
     }
@@ -26,13 +26,13 @@ public class StepsTable {
     public String getTime() {
         return time;
     }
-    public String getSteps() {
+    public Integer getSteps() {
         return steps;
     }
     public void setTime(String time) {
         this.time = time;
     }
-    public void setSteps(String steps) {
+    public void setSteps(Integer steps) {
         this.steps = steps;
     }
 }

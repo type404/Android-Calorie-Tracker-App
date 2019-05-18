@@ -40,6 +40,10 @@ public class DailyDietFragment extends Fragment {
     String newFood;
     String servingUnit;
     Integer servingAmount;
+    Integer newFoodId;
+    Button bUpdateFoodTable;
+    String fCal;
+    String fFat;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         vDailyDiet = inflater.inflate(R.layout.fragment_daily_diet, container, false);
@@ -47,6 +51,7 @@ public class DailyDietFragment extends Fragment {
         vFoodItems = vDailyDiet.findViewById(R.id.spinnerFoodItems);
         buttonCreateFood = vDailyDiet.findViewById(R.id.buttonCreateFood);
         buttonAddFood = vDailyDiet.findViewById(R.id.buttonAddFood);
+        bUpdateFoodTable = (Button)vDailyDiet.findViewById(R.id.btn_addToTable);
         List<String> list = new ArrayList<>();
         list.add("Cereals");
         list.add("Dessert");
@@ -83,6 +88,8 @@ public class DailyDietFragment extends Fragment {
                 searchAsyncTask.execute(newFood);
                 FoodInfoAsyncTask foodInfoAsyncTask=new FoodInfoAsyncTask();
                 foodInfoAsyncTask.execute(newFood);
+                MaxIdAsyncTask maxIdAsyncTask = new MaxIdAsyncTask();
+                maxIdAsyncTask.execute();
             }
         });
         buttonAddFood.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +97,14 @@ public class DailyDietFragment extends Fragment {
             public void onClick(View v) {
                 UpdateConsAsyncTask uaf = new UpdateConsAsyncTask();
                 uaf.execute();
+            }
+        });
+
+        bUpdateFoodTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateFoodTableAsyncTask updateFoodTableAsyncTask = new UpdateFoodTableAsyncTask();
+                updateFoodTableAsyncTask.execute(fCal,fFat);
             }
         });
         return vDailyDiet;
@@ -160,8 +175,8 @@ public class DailyDietFragment extends Fragment {
             String[] foodData = FoodSearchAPI.getFoodCalsAndFat(result);
             tvCal.setText("Calories: "+foodData[0]);
             tvFat.setText("Fat Amount: "+foodData[1]);
-            UpdateFoodTableAsyncTask updateFoodTableAsyncTask = new UpdateFoodTableAsyncTask();
-            updateFoodTableAsyncTask.execute(foodData[0],foodData[1]);
+            fCal = foodData[0];
+            fFat = foodData[1];
         }
     }
     private class UpdateConsAsyncTask extends AsyncTask<String, Void, String[]> {
@@ -218,13 +233,27 @@ public class DailyDietFragment extends Fragment {
     {
         @Override
         protected String doInBackground(String... params) {
-            Food food = new Food(Food.createID(),newFood,spinnerItemValue,Integer.parseInt(params[0]),servingUnit,servingAmount,Integer.parseInt(params[0]));
+            String p1 = params[0].substring(0,params[0].indexOf("."));
+            String p2 = params[1].substring(0,params[1].indexOf("."));
+            Food food = new Food(newFoodId,newFood,spinnerItemValue,Integer.parseInt(p1),servingUnit,servingAmount,Integer.parseInt(p2));
             RestClient.createFood(food);
               return "New food item was added to the list!";
         }
         @Override
         protected void onPostExecute(String response) {
             Toast.makeText(vDailyDiet.getContext(),response,Toast.LENGTH_LONG).show();
+        }
+    }
+    private class MaxIdAsyncTask extends AsyncTask<Void, Void, String>
+    {
+        @Override
+        protected String doInBackground(Void... v) {
+          String foodId = RestClient.getMaxId("food");
+          return foodId;
+        }
+        @Override
+        protected void onPostExecute(String response) {
+            newFoodId = Integer.parseInt(response);
         }
     }
 }

@@ -30,9 +30,6 @@ public class Food {
         this.fat = fat;
     }
 
-    public static int createID() {
-        return 1;
-    }
 
     public Integer getFoodId() {
         return foodId;

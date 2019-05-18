@@ -61,6 +61,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="Find" />
+        <Button
+            android:id="@+id/btn_addToTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Update Table" />
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="5dp"

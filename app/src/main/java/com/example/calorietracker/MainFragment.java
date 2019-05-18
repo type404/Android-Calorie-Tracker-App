@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +22,8 @@ public class MainFragment extends Fragment {
     TextView totalCalsBurnt;
     Button btn_updateCalGoal;
     EditText etUpdateCalGoal;
+    String calsConsumed;
+    String tcb;
 
     public static MainFragment newInstance(String username, String calGoals, String currDate) {
         MainFragment fragment = new MainFragment();
@@ -42,7 +42,7 @@ public class MainFragment extends Fragment {
         welcomeText = (TextView) vMain.findViewById(R.id.welcomeMessage);
         setCalGoal = (TextView) vMain.findViewById(R.id.setCalGoal);
         currDate = (TextView) vMain.findViewById(R.id.currDate);
-        totalStepsTaken = (TextView) vMain.findViewById(R.id.totalStepsTaken);
+//        totalStepsTaken = (TextView) vMain.findViewById(R.id.totalStepsTaken);
         totalCalsBurnt = (TextView) vMain.findViewById(R.id.totalCalsBurnt);
         totalCalsConsumed = (TextView) vMain.findViewById(R.id.totalCalsConsumed);
         btn_updateCalGoal = vMain.findViewById(R.id.btn_updateCalGoal);
@@ -79,7 +79,7 @@ public class MainFragment extends Fragment {
             Integer userId = spUserData.getInt("user_id", 0);
             String calData = RestClient.getReportFromUserIdDate(userId, reportDate);
             calories = calData.split(",");
-            totalCalsConsumed.setText("Total Calories Consumed today: "+calories[0]);
+            calsConsumed = calories[0];
             String burntRest = RestClient.getUserCalsBurntAtRest(userId);
             Integer bR = Integer.parseInt(burntRest);
             int i =date[0].indexOf(" ");
@@ -87,8 +87,12 @@ public class MainFragment extends Fragment {
             Integer hR = Integer.parseInt(hour);
             Integer calsBurnt = Integer.parseInt(calories[1]);
             Integer totalBurnt =  calsBurnt + bR/hR;
-            totalCalsBurnt.setText("Total Calories Burnt till now: " + String.valueOf(totalBurnt));
+            tcb = String.valueOf(totalBurnt);
             return null;
+        }
+        protected void onPostExecute(Void v) {
+            totalCalsConsumed.setText("Total Calories Consumed today: "+ calsConsumed);
+            totalCalsBurnt.setText("Total Calories Burnt till now: " + tcb);
         }
     }
 }

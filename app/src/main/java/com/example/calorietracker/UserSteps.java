@@ -1,6 +1,8 @@
 package com.example.calorietracker;
 
 import android.arch.persistence.room.Room;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,23 +37,23 @@ public class UserSteps extends Fragment {
     String[] colHEAD;
     int[] dataCell;
     TextView editSteps;
-    Button deleteStepsButton;
+    Integer totalStepsTaken = 0;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         vUserSteps = inflater.inflate(R.layout.fragment_user_steps, container, false);
         addStepsButton = vUserSteps.findViewById(R.id.addStepsButton);
-        deleteStepsButton = vUserSteps.findViewById(R.id.buttonDeleteSteps);
         addSteps = vUserSteps.findViewById(R.id.addSteps);
+
         db = Room.databaseBuilder(vUserSteps.getContext(),
                 StepsDatabase.class, "StepDatabase")
                 .fallbackToDestructiveMigration()
                 .build();
-
-        colHEAD = new String[] {"TIME","STEPS"};
-        dataCell = new int[] {R.id.dateTime,R.id.stepsTaken};
+        colHEAD = new String[] {"ID","TIME","STEPS"};
+        dataCell = new int[] {R.id.stepId,R.id.dateTime,R.id.stepsTaken};
         stepList = vUserSteps.findViewById(R.id.list_view);
         stepListArray = new ArrayList<HashMap<String, String>>();
-
+        ReadDatabase readDatabase = new ReadDatabase();
+        readDatabase.execute();
         addStepsButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 String newStep = addSteps.getText().toString();
@@ -66,7 +68,7 @@ public class UserSteps extends Fragment {
                 }
             }
         });
-        /*editSteps.setOnClickListener(v -> {
+      /*  editSteps.setOnClickListener(v -> {
             addStepsButton.setVisibility(View.GONE);
             updateStepsButton.setVisibility(View.VISIBLE);
         });
@@ -86,7 +88,7 @@ public class UserSteps extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             String curr_date = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
-            StepsTable stepsTable = new StepsTable(curr_date, (params[0]));
+            StepsTable stepsTable = new StepsTable(curr_date, Integer.parseInt(params[0]));
             db.stepsDAO().insert(stepsTable);
             return "Steps Added!";
         }
@@ -96,26 +98,31 @@ public class UserSteps extends Fragment {
             Toast.makeText(vUserSteps.getContext(),details,Toast.LENGTH_LONG).show();
         }
     }
-    private class ReadDatabase extends AsyncTask<Void, Void, HashMap> {
+    private class ReadDatabase extends AsyncTask<Void, Void, String> {
         @Override
-        protected HashMap<String, String> doInBackground(Void... params) {
+        protected String doInBackground(Void... params) {
             List<StepsTable> steps = db.stepsDAO().getAll();
-            HashMap<String, String> entryList = new HashMap<String, String>();
+            totalStepsTaken = db.stepsDAO().findStepsTaken();
+            SharedPreferences sharedPref = vUserSteps.getContext().getSharedPreferences("User_TotalSteps", Context.MODE_PRIVATE);
+            SharedPreferences.Editor ed = sharedPref.edit();
+            ed.putInt("total_steps",totalStepsTaken);
+            ed.commit();
             if (!(steps.isEmpty() || steps == null) ){
                 for (StepsTable temp : steps) {
+                    HashMap<String, String> entryList = new HashMap<String, String>();
+                    entryList.put("ID", String.valueOf(temp.getId()));
                     entryList.put("TIME", temp.getTime());
-                    entryList.put("STEPS", temp.getSteps());
+                    entryList.put("STEPS", String.valueOf(temp.getSteps()));
+                    stepListArray.add(entryList);
                 }
-                return entryList;
+                return "Your steps for the day!";
             }
             else
-                entryList.put("TIME","No entry for today");
-                entryList.put("STEPS","No steps for today");
-                return entryList;
+                return "No steps Taken!";
         }
         @Override
-        protected void onPostExecute(HashMap map) {
-                stepListArray.add((HashMap<String, String>) map);
+        protected void onPostExecute(String result) {
+                Toast.makeText(vUserSteps.getContext(),result,Toast.LENGTH_LONG).show();
                 myListAdapter = new SimpleAdapter(vUserSteps.getContext(), stepListArray, R.layout.list_view, colHEAD, dataCell);
                 stepList.setAdapter(myListAdapter);
         }
@@ -123,7 +130,7 @@ public class UserSteps extends Fragment {
     private class UpdateDatabase extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-
+            List<StepsTable> steps = db.stepsDAO().getAll();
             return "User updated";
         }
 
@@ -132,4 +139,5 @@ public class UserSteps extends Fragment {
             Toast.makeText(vUserSteps.getContext(),details,Toast.LENGTH_LONG).show();
         }
     }
+
 }

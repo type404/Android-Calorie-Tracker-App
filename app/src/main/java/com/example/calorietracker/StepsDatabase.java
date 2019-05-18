@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {StepsTable.class}, version = 4, exportSchema = false)
+@Database(entities = {StepsTable.class}, version = 5, exportSchema = false)
 public abstract class StepsDatabase extends RoomDatabase {
     public abstract StepsDAO stepsDAO();
     private static volatile StepsDatabase INSTANCE;

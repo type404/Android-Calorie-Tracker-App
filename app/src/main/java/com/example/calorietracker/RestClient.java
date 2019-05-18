@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class RestClient {
     private static final String BASE_URL =
-            "http://192.168.111.1:8080/CalorieTrackerApp/webresources/";
+            "http://10.0.2.2:8080/CalorieTrackerApp/webresources/";
     //class to get Credential Data by a given username
     public static String getCredentials(String username) {
         final String methodPath = "restws.credential/findByUsername/" + username;
