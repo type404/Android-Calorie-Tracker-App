@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ffffff"
+    android:background="@drawable/bg"
     android:orientation="vertical"
     tools:ignore="HardcodedText" >
     <LinearLayout
@@ -17,24 +17,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Select Report Date" />
-
-        <TextView
-            android:id="@+id/reportDate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingLeft="8dp"
-            android:text="@string/dob"
-            android:textSize="16dip" />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pieChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="220dp"
+        android:orientation="vertical">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -42,6 +34,7 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:layout_marginTop="8dp">
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_reportStartDate"
             android:layout_width="wrap_content"
@@ -56,12 +49,12 @@
             android:text="End Date" />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="220dp"
+        android:orientation="vertical">
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </LinearLayout>

@@ -82,9 +82,30 @@ public class RestClient {
         String s = HTTPConnection(methodPath);
         return s;
     }
+    //get report from user Id and date
+    public static String getReportForAPeriod(Integer id, String sDate, String eDate) {
+        final String methodPath = "restws.report/findCalorieDataForPeriod/" + id + "/" + sDate + "/" + eDate;
+        //initialise
+        String s = HTTPConnection(methodPath);
+        return s;
+    }
     //get calories burnt at rest
     public static String getUserCalsBurntAtRest(Integer id) {
         final String methodPath = "restws.users/findTotalCalsBurnedRest/" + id;
+        //initialise
+        String s = HTTPConnectionText(methodPath);
+        return s;
+    }
+    //get calories consumed
+    public static String getUserTotalCalsConsumed(Integer id, String date) {
+        final String methodPath = "restws.consumption/findTotalCalsConsumed/" + id + "/" + date;
+        //initialise
+        String s = HTTPConnectionText(methodPath);
+        return s;
+    }
+    //get calories burned per step
+    public static String getUserCalsBurnedPerStep(Integer id) {
+        final String methodPath = "restws.users/findCalsBurnedPerStep/" + id;
         //initialise
         String s = HTTPConnectionText(methodPath);
         return s;

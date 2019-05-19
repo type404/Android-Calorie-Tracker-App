@@ -63,18 +63,28 @@
 
             <Button
                 android:id="@+id/addStepsButton"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Add" />
+
             <Button
                 android:id="@+id/updateStepsButton"
-                android:visibility="gone"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Update" />
+                android:text="Update"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btn_updateReportTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="41dp"
+        android:layout_weight="1"
+        android:text="Update Report Table" />
 </RelativeLayout>
