@@ -136,8 +136,11 @@ public class Homescreen extends AppCompatActivity
                 nextFragment = new UserSteps();
                 break;
             case R.id.nav_reports:
-                nextFragment = new Report();
-                break;
+                Intent intentR = new Intent(Homescreen.this, Report_Activity.class);
+                startActivity(intentR);
+                return true;
+//                nextFragment = new Report_Fragment();
+//                break;
             case R.id.nav_maps:
                 Intent intent = new Intent(Homescreen.this, MapActivity.class);
                 startActivity(intent);

@@ -24,7 +24,7 @@ public class Users implements Parcelable {
     private int levelsOfActivity;
     private int stepsPerMile;
     private Collection<Credential> credentialCollection;
-    private Collection<Report> reportCollection;
+    private Collection<ReportNetbeans> reportCollection;
     private Collection<Consumption> consumptionCollection;
 
     public Users() {
@@ -198,11 +198,11 @@ public class Users implements Parcelable {
         this.credentialCollection = credentialCollection;
     }
 
-    public Collection<Report> getReportCollection() {
+    public Collection<ReportNetbeans> getReportCollection() {
         return reportCollection;
     }
 
-    public void setReportCollection(Collection<Report> reportCollection) {
+    public void setReportCollection(Collection<ReportNetbeans> reportCollection) {
         this.reportCollection = reportCollection;
     }
     public Collection<Consumption> getConsumptionCollection() {
