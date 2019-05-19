@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+/*Checks Id and password from credential DB*/
     private class UsersValidationAsyncTask extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... v) {
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                 Credential userCredential = gson.fromJson(json, Credential.class);
                 Users loggedInUser = userCredential.getUserId();
+                /*Sends user object to the homescreen*/
                 if (pwHash.equals(userCredential.getPasswordHash())) {
                     Intent intent = new Intent(MainActivity.this, Homescreen.class);
                     Bundle bundle = new Bundle();

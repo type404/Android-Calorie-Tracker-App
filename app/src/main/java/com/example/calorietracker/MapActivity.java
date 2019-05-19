@@ -82,7 +82,7 @@ public class MapActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         mMapView.onSaveInstanceState(outState);
     }
-
+/*searches the location as per address and puts marker*/
     private class MapAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -104,7 +104,7 @@ public class MapActivity extends AppCompatActivity {
             });
         }
     }
-
+    /*searches park as per postcode within 5Kms and puts marker*/
     private class ParkMapAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {

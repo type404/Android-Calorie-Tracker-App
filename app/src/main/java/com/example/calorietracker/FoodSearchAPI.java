@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
-
+/*Food calorie and fat API Call*/
 public class FoodSearchAPI {
     private static final String APP_ID = "4b3c3647";
     private static final String APK_KEY = "cd1f9e1edbda1e4c1c78ee4815173560";

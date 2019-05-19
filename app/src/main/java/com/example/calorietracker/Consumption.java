@@ -6,7 +6,7 @@ package com.example.calorietracker;
  */
 
 import java.util.Date;
-
+/*NETBEANS CLASS*/
 public class Consumption {
 
     private static final long serialVersionUID = 1L;

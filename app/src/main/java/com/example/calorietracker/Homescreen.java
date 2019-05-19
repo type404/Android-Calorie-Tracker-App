@@ -26,12 +26,12 @@ import com.google.gson.GsonBuilder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
+/*Activity redirects to fragments and has navigation drawers*/
 public class Homescreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Integer userId;
     String uName;
-    String getCalGoals;
+    String getCalGoals = "Calorie Goals not set!";
     String curr_date;
 
     @Override
@@ -55,9 +55,7 @@ public class Homescreen extends AppCompatActivity
         userId = aUser.getUserId();
 
         curr_date = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
-        UserGetReportAsyncTask userReport = new UserGetReportAsyncTask();
-        userReport.execute();
-
+        /*Saving user data in shared preference*/
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("User_File", Context.MODE_PRIVATE);
         SharedPreferences.Editor ed = sharedPref.edit();
         ed.putInt("user_id",userId);
@@ -65,27 +63,13 @@ public class Homescreen extends AppCompatActivity
         ed.putString("user_address",aUser.getAddress());
         ed.putString("user_postcode",aUser.getPostcode());
         ed.commit();
+        /*Passing user data from activity to fragment*/
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = MainFragment.newInstance(uName,getCalGoals,curr_date);
+        ft.replace(R.id.content_frame, fragment);
+        ft.commit();
 
     }
-
-    private class UserGetReportAsyncTask extends AsyncTask<Void, Void, String> {
-        @Override
-        protected String doInBackground(Void... v) {
-            return RestClient.getReportFromUserId(userId);
-        }
-
-        @Override
-        protected void onPostExecute(String json) {
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-            ReportNetbeans rn = gson.fromJson(json, ReportNetbeans.class);
-            getCalGoals = rn.getSetCalsGoal().toString();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                Fragment fragment = MainFragment.newInstance(uName,getCalGoals,curr_date);
-                ft.replace(R.id.content_frame, fragment);
-                ft.commit();
-        }
-    }
-
 
     @Override
     public void onBackPressed() {

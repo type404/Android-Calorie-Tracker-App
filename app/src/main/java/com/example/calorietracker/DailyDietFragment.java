@@ -62,7 +62,7 @@ public class DailyDietFragment extends Fragment {
         list.add("Poultry");
         list.add("Vegetables");
         list.add("Bread");
-
+        /*Populating first spinner*/
         ArrayAdapter<String> adapter = new ArrayAdapter<>(vDailyDiet.getContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         vFoodCategories.setAdapter(adapter);
@@ -80,6 +80,7 @@ public class DailyDietFragment extends Fragment {
 
             }
         });
+        /*Searches new food item*/
         buttonCreateFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +93,7 @@ public class DailyDietFragment extends Fragment {
                 maxIdAsyncTask.execute();
             }
         });
+        /*Updates food into the consumption table*/
         buttonAddFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +101,7 @@ public class DailyDietFragment extends Fragment {
                 uaf.execute();
             }
         });
-
+        /*Updates the food table with the new searched food*/
         bUpdateFoodTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +113,7 @@ public class DailyDietFragment extends Fragment {
 
 
     }
+    /*Populating the second spinner*/
     private class GetFoodItemsAsyncTask extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... v) {
@@ -144,6 +147,7 @@ public class DailyDietFragment extends Fragment {
             });
             }
         }
+        /*Food description and image search calling Google API*/
     private class SearchAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -163,6 +167,7 @@ public class DailyDietFragment extends Fragment {
 
         }
     }
+    /*Food calorie and fat amount API call*/
     private class FoodInfoAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -201,7 +206,7 @@ public class DailyDietFragment extends Fragment {
                 pcat.execute(cId,userId,foodId,qty);
             }
         }
-
+/*USes the food and user ibject to update consumption table*/
     private class PostConsAsyncTask extends AsyncTask<Integer, Void, String>
     {
         @Override
@@ -235,7 +240,7 @@ public class DailyDietFragment extends Fragment {
         protected String doInBackground(String... params) {
             String p1 = params[0].substring(0,params[0].indexOf("."));
             String p2 = params[1].substring(0,params[1].indexOf("."));
-            Food food = new Food(newFoodId,newFood,spinnerItemValue,Integer.parseInt(p1),servingUnit,servingAmount,Integer.parseInt(p2));
+            Food food = new Food(newFoodId+1,newFood,spinnerItemValue,Integer.parseInt(p1),servingUnit,servingAmount,Integer.parseInt(p2));
             RestClient.createFood(food);
               return "New food item was added to the list!";
         }
@@ -244,6 +249,7 @@ public class DailyDietFragment extends Fragment {
             Toast.makeText(vDailyDiet.getContext(),response,Toast.LENGTH_LONG).show();
         }
     }
+    /*Get the maximum ID from Db to create new ID for updating DB*/
     private class MaxIdAsyncTask extends AsyncTask<Void, Void, String>
     {
         @Override

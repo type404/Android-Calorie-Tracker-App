@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 import static android.support.constraint.Constraints.TAG;
 
-
+/*NETBEANS CLASS*/
 public class Credential {
 
         private String username;

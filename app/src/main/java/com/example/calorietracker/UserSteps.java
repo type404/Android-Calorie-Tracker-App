@@ -1,12 +1,16 @@
 package com.example.calorietracker;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +23,20 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import static android.content.Context.ALARM_SERVICE;
+import static android.support.v4.content.ContextCompat.getSystemService;
+import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 
 public class UserSteps extends Fragment {
     StepsDatabase db = null;
@@ -39,14 +50,36 @@ public class UserSteps extends Fragment {
     String[] colHEAD;
     int[] dataCell;
     Integer calsConsumed = 0;
-    Integer totalBurnt = 0;
+    Double totalBurnt = 0.0;
     Integer totalStepsTaken = 0;
+    Integer repId;
+    Context context;
+    private AlarmManager alarmMgr;
+    private Intent alarmIntent;
+    private PendingIntent pendingIntent;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         vUserSteps = inflater.inflate(R.layout.fragment_user_steps, container, false);
         addStepsButton = vUserSteps.findViewById(R.id.addStepsButton);
         updateStepsButton = vUserSteps.findViewById(R.id.updateStepsButton);
+        /*Calendar cur_cal = new GregorianCalendar();
+        cur_cal.setTimeInMillis(System.currentTimeMillis());
+
+        Calendar cal = new GregorianCalendar();
+        cal.add(Calendar.DAY_OF_YEAR, cur_cal.get(Calendar.DAY_OF_YEAR));
+        cal.set(Calendar.HOUR_OF_DAY, 23);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, cur_cal.get(Calendar.SECOND));
+        cal.set(Calendar.MILLISECOND, cur_cal.get(Calendar.MILLISECOND));
+        cal.set(Calendar.DATE, cur_cal.get(Calendar.DATE));
+        cal.set(Calendar.MONTH, cur_cal.get(Calendar.MONTH));
+        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmIntent = new Intent(vUserSteps.getContext(), ScheduledIntentService.class);
+        pendingIntent = PendingIntent.getService(vUserSteps.getContext(), 0, alarmIntent, 0);
+        alarmMgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                cal.getTimeInMillis(), alarmMgr.INTERVAL_DAY, pendingIntent);*/
         addSteps = vUserSteps.findViewById(R.id.addSteps);
         db = Room.databaseBuilder(vUserSteps.getContext(),
                 StepsDatabase.class, "StepDatabase")
@@ -84,7 +117,7 @@ public class UserSteps extends Fragment {
         Toast.makeText(vUserSteps.getContext(), "Enter Valid Steps", Toast.LENGTH_LONG).show();
         return vUserSteps;
     }
-
+/*Insert steps to DB*/
     private class InsertDatabaseAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -101,7 +134,7 @@ public class UserSteps extends Fragment {
             Toast.makeText(vUserSteps.getContext(), details, Toast.LENGTH_LONG).show();
         }
     }
-
+/*Read all DB items*/
     private class ReadDatabase extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {
@@ -148,7 +181,7 @@ public class UserSteps extends Fragment {
                 }
             });
         }
-
+/*Update database as per the clicked item*/
         private class UpdateDatabase extends AsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... params) {
@@ -166,7 +199,7 @@ public class UserSteps extends Fragment {
                 Toast.makeText(vUserSteps.getContext(), details, Toast.LENGTH_LONG).show();
             }
         }
-
+/*Read the last entry in DB*/
         private class ReadDatabaseOne extends AsyncTask<Void, Void, Void> {
             @Override
             protected Void doInBackground(Void... params) {
@@ -190,11 +223,14 @@ public class UserSteps extends Fragment {
                 showList();
             }
         }
+        /*Posts to Netbeans report table*/
         public void updateReport() {
             GetStepsTakenDB getStepsTakenDB = new GetStepsTakenDB();
             getStepsTakenDB.execute();
             GetConsDataAT getConsDataAT = new GetConsDataAT();
             getConsDataAT.execute();
+            DeleteDatabase deleteDatabase = new DeleteDatabase();
+            deleteDatabase.execute();
         }
     private class GetConsDataAT extends AsyncTask<String, Void, String[]> {
         @Override
@@ -213,17 +249,62 @@ public class UserSteps extends Fragment {
         protected void onPostExecute(String[] result) {
             calsConsumed = Integer.parseInt(result[0]);
             Double calsBurnedPerStep = totalStepsTaken*Double.parseDouble(result[1]);
-            totalBurnt = Integer.parseInt(String.valueOf(calsBurnedPerStep)) + Integer.parseInt(result[2]);
-            System.out.println(totalBurnt);
+            totalBurnt = calsBurnedPerStep + Integer.parseInt(result[2]);
+            UpdateTableReport updateTableReport = new UpdateTableReport();
+            updateTableReport.execute();
         }
     }
+    /*Find total steps*/
     private class GetStepsTakenDB extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected Void doInBackground(Void... voids) {
             totalStepsTaken = db.stepsDAO().findStepsTaken();
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("Steps_Taken", Context.MODE_PRIVATE);
+            SharedPreferences.Editor ed = sharedPref.edit();
+            ed.putInt("steps_taken",totalStepsTaken);
+            String reportId = RestClient.getMaxId("report");
+            repId = Integer.parseInt(reportId);
             return null;
         }
     }
+    private class UpdateTableReport extends AsyncTask<Void, Void, String> {
 
+        @Override
+        protected String doInBackground(Void... voids) {
+            Users user1;
+            SharedPreferences spUserData = getContext().getSharedPreferences("User_File", Context.MODE_PRIVATE);
+            Integer userId = spUserData.getInt("user_id", 0);
+            SharedPreferences spCalGoal = getContext().getSharedPreferences("User_CalGoal", Context.MODE_PRIVATE);
+            String calGoal = spCalGoal.getString("updated_cal_goals", "0");
+            String curr_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new java.util.Date());
+            String user = RestClient.getUserByUserId(userId);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+            try {
+                user1 = gson.fromJson(user, Users.class);
+                Log.i("user", String.valueOf(user1));
+            } catch (IllegalStateException | JsonSyntaxException exception){
+                return "Update Fail";
+            }
+            ReportNetbeans reportNetbeans = new ReportNetbeans(repId+1,java.sql.Date.valueOf(curr_date),user1,calsConsumed,totalStepsTaken,Integer.parseInt(calGoal));
+            RestClient.createReport(reportNetbeans);
+            return "Your report updated";
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(vUserSteps.getContext(), s, Toast.LENGTH_LONG).show();
+        }
+    }
+    private class DeleteDatabase extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void...v) {
+            db.stepsDAO().deleteAll();
+            return "Records Deleted!";
+        }
+
+        @Override
+        protected void onPostExecute(String details) {
+            Toast.makeText(vUserSteps.getContext(), details, Toast.LENGTH_LONG).show();
+        }
+    }
 }

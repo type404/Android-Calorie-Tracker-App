@@ -6,12 +6,14 @@
         android:id="@+id/stepId"
         android:layout_width="181dp"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:layout_weight="1"
         android:text="Step ID" />
     <TextView
         android:id="@+id/dateTime"
         android:layout_width="181dp"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:layout_weight="1"
         android:text="Date and Time" />
 
@@ -19,6 +21,7 @@
         android:id="@+id/stepsTaken"
         android:layout_width="184dp"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:layout_weight="1"
         android:text="Steps Taken"
         android:clickable="true"/>

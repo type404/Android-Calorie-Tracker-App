@@ -35,6 +35,9 @@
 
         <uses-library
             android:name="org.apache.http.legacy" android:required="false" />
+        <!--<service-->
+            <!--android:name=".ScheduledIntentService"-->
+            <!--android:exported="false" />-->
     </application>
 
 </manifest>

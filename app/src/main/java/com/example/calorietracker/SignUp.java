@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private TextView dobView;
@@ -56,7 +58,11 @@ public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDate
                 tmpLName = ((EditText) findViewById(R.id.lastName)).getText().toString();
                 tmpUName = ((EditText) findViewById(R.id.create_username)).getText().toString();
                 String tmpPwd = ((EditText) findViewById(R.id.input_password)).getText().toString();
-                tmpPwdHash = Credential.passHashConverter(tmpPwd);
+               /* if(isPassword(tmpPwd)) {*/
+                    tmpPwdHash = Credential.passHashConverter(tmpPwd);
+          /*      } else {
+                    ((EditText) findViewById(R.id.input_password)).setError("Re-enter password!");
+                }*/
                 tmpEmail = ((EditText) findViewById(R.id.emailAddress)).getText().toString();
                 tmpHeight = ((EditText) findViewById(R.id.height)).getText().toString();
                 tmpWeight = ((EditText) findViewById(R.id.weight)).getText().toString();
@@ -85,7 +91,7 @@ public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDate
                 showDatePicker();
             }
         });
-
+        /*Spinner for activity levels*/
         activityLevel = findViewById(R.id.spinnerActivityLevel);
         List<String> list = new ArrayList<>();
         list.add("Choose Activity Level");
@@ -118,6 +124,7 @@ public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDate
             }
         });
     }
+    /*Posts data into sign up and credential table*/
     private class PostAsyncTask extends AsyncTask<String, Void, String>
     {
         @Override
@@ -126,7 +133,7 @@ public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDate
             Integer uId = Integer.parseInt(id) + 1;
             Users user=new Users(uId,params[0],params[1],params[2], Date.valueOf(params[3]),Integer.valueOf(params[4]),Integer.valueOf(params[5]),Character.valueOf(params[6].charAt(0)),params[7],params[8],Integer.valueOf(params[9]),Integer.valueOf(params[10]));
             RestClient.createUsers(user);
-            Credential cred = new Credential(params[12],params[13],Date.valueOf(params[14]),user);
+            Credential cred = new Credential(params[11],params[12],Date.valueOf(params[13]),user);
             RestClient.createUserCredential(cred);
             return "User was added!";
         }
@@ -153,5 +160,15 @@ public class SignUp extends AppCompatActivity implements DatePickerDialog.OnDate
         dobView = findViewById(R.id.dob);
         dobView.setText(dobDate);
     }
-
+    public static boolean isPassword(String string){
+        String regEx = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
+        Pattern p;
+        Matcher m;
+        p = Pattern.compile(regEx);
+        m = p.matcher(string);
+        if (m.matches())
+            return true;
+        else
+            return false;
+    }
 }

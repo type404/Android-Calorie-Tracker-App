@@ -118,7 +118,7 @@ public class Report_Activity extends AppCompatActivity implements DatePickerDial
         float barWidth = 0.46f;
 
         int start = 1;
-        int end = 1;
+        int end = 4;
 
         List<BarEntry> yVals1 = new ArrayList<BarEntry>();
         List<BarEntry> yVals2 = new ArrayList<BarEntry>();
@@ -197,7 +197,7 @@ public class Report_Activity extends AppCompatActivity implements DatePickerDial
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
+/*Report data for pie chart*/
     private class PieReportAsyncTask extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... v) {
@@ -216,6 +216,7 @@ public class Report_Activity extends AppCompatActivity implements DatePickerDial
             drawChart(consP,burntP,remP);
         }
     }
+    /*Report data for bar graph*/
     private class BarReportAsyncTask extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... v) {

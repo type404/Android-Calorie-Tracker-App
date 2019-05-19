@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Scanner;
+/*Google custom search API calls*/
 
 public class searchAPI {
     private static final String API_KEY = "AIzaSyAt0fzjqhOeV2Gp4bU_fFYz6o5v97w2T9Y";

@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author tisa9
  */
-
+/*NETBEANS CLASS*/
 public class ReportNetbeans implements Parcelable {
 
     private static final long serialVersionUID = 1L;
@@ -34,9 +34,13 @@ public class ReportNetbeans implements Parcelable {
         this.reportId = reportId;
     }
 
-    public ReportNetbeans(Integer reportId, Date reportDate) {
+    public ReportNetbeans(Integer reportId, Date reportDate, Users user, Integer totalCalsConsumed, Integer totalStepsTaken, Integer setCalsGoals) {
         this.reportId = reportId;
         this.reportDate = reportDate;
+        this.userId = user;
+        this.totalCalsConsumed = totalCalsConsumed;
+        this.totalStepsTaken = totalStepsTaken;
+        this.setCalsGoal = setCalsGoals;
     }
 
     protected ReportNetbeans(Parcel in) {

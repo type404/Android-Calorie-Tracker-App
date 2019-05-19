@@ -29,6 +29,7 @@ public class Users implements Parcelable {
 
     public Users() {
     }
+    /*NETBEANS CLASS*/
 
     public Users(Integer userId) {
         this.userId = userId;

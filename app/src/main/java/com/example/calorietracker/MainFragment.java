@@ -22,9 +22,10 @@ public class MainFragment extends Fragment {
     TextView totalCalsBurnt;
     Button btn_updateCalGoal;
     EditText etUpdateCalGoal;
-    String calsConsumed;
-    String tcb;
+    String calsConsumed = "None!";
+    String tcb = "None!";
 
+/*Method to be called from activity to pass the specified data in the parameters, to be used in this fragment*/
     public static MainFragment newInstance(String username, String calGoals, String currDate) {
         MainFragment fragment = new MainFragment();
         Bundle bundle = new Bundle();
@@ -42,7 +43,7 @@ public class MainFragment extends Fragment {
         welcomeText = (TextView) vMain.findViewById(R.id.welcomeMessage);
         setCalGoal = (TextView) vMain.findViewById(R.id.setCalGoal);
         currDate = (TextView) vMain.findViewById(R.id.currDate);
-//        totalStepsTaken = (TextView) vMain.findViewById(R.id.totalStepsTaken);
+        totalStepsTaken = (TextView) vMain.findViewById(R.id.totalStepsTaken);
         totalCalsBurnt = (TextView) vMain.findViewById(R.id.totalCalsBurnt);
         totalCalsConsumed = (TextView) vMain.findViewById(R.id.totalCalsConsumed);
         btn_updateCalGoal = vMain.findViewById(R.id.btn_updateCalGoal);
@@ -69,7 +70,7 @@ public class MainFragment extends Fragment {
 
         return vMain;
     }
-
+/*Get data from report for the same date*/
     private class ReportAsyncTask extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... date) {
@@ -78,21 +79,27 @@ public class MainFragment extends Fragment {
             SharedPreferences spUserData = getActivity().getSharedPreferences("User_File", Context.MODE_PRIVATE);
             Integer userId = spUserData.getInt("user_id", 0);
             String calData = RestClient.getReportFromUserIdDate(userId, reportDate);
-            calories = calData.split(",");
-            calsConsumed = calories[0];
-            String burntRest = RestClient.getUserCalsBurntAtRest(userId);
-            Integer bR = Integer.parseInt(burntRest);
-            int i =date[0].indexOf(" ");
-            String hour = date[0].substring(i+1,date[0].indexOf(":"));
-            Integer hR = Integer.parseInt(hour);
-            Integer calsBurnt = Integer.parseInt(calories[1]);
-            Integer totalBurnt =  calsBurnt + bR/hR;
-            tcb = String.valueOf(totalBurnt);
+            if(!calData.equals("Enter Valid User ID and Date Combo")) {
+                calories = calData.split(",");
+                calsConsumed = calories[0];
+                String burntRest = RestClient.getUserCalsBurntAtRest(userId);
+                Integer bR = Integer.parseInt(burntRest);
+                int i = date[0].indexOf(" ");
+                String hour = date[0].substring(i + 1, date[0].indexOf(":"));
+                Integer hR = Integer.parseInt(hour);
+                Integer calsBurnt = Integer.parseInt(calories[1]);
+                Integer totalBurnt = calsBurnt + bR / hR;
+                tcb = String.valueOf(totalBurnt);
+                return null;
+            }
             return null;
         }
         protected void onPostExecute(Void v) {
             totalCalsConsumed.setText("Total Calories Consumed today: "+ calsConsumed);
             totalCalsBurnt.setText("Total Calories Burnt till now: " + tcb);
+            SharedPreferences spCalGoal = getContext().getSharedPreferences("Steps_Taken", Context.MODE_PRIVATE);
+            Integer steps = spCalGoal.getInt("steps_taken", 0);
+            totalStepsTaken.setText("Total steps taken for today: " + steps);
         }
     }
 }

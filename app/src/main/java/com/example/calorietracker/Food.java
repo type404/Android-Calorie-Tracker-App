@@ -12,7 +12,7 @@ public class Food {
     private int servingAmount;
     private int fat;
     private Collection<Consumption> consumptionCollection;
-
+    /*NETBEANS CLASS*/
     public Food() {
     }
 
