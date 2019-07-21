@@ -16,8 +16,8 @@ import java.util.Scanner;
 /*Google custom search API calls*/
 
 public class searchAPI {
-    private static final String API_KEY = "AIzaSyAt0fzjqhOeV2Gp4bU_fFYz6o5v97w2T9Y";
-    private static final String SEARCH_ID_cx = "013144027827559581124:8gwryq5giu8";
+    private static final String API_KEY = "xxxxx";
+    private static final String SEARCH_ID_cx = "XXXX";
 
     public static String searchDescription(String keyword, String[] params, String[] values) {
         keyword = keyword.replace(" ", "+");
