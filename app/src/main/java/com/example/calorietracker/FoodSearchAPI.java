@@ -8,8 +8,8 @@ import java.net.URL;
 import java.util.Scanner;
 /*Food calorie and fat API Call*/
 public class FoodSearchAPI {
-    private static final String APP_ID = "4b3c3647";
-    private static final String APK_KEY = "cd1f9e1edbda1e4c1c78ee4815173560";
+    private static final String APP_ID = "xxxxx";
+    private static final String APK_KEY = "xxxxxxx";
 //to check JSON OBJECT https://api.edamam.com/api/food-database/parser?ingr=pizza&app_id=4b3c3647&app_key=cd1f9e1edbda1e4c1c78ee4815173560"
     public static String searchFood(String keyword) {
         keyword = keyword.replace(" ", "+");
