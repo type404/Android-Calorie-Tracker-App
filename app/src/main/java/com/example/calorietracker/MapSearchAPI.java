@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 /*To invoke mapquest API*/
 public class MapSearchAPI {
-    private static final String API_KEY = "iN5OBRLxGG9QryhAk8vmgRswGlBKzRVG";
+    private static final String API_KEY = "XXXXXXXXX";
     public static String searchMap(String address, String postcode) {
         URL url = null;
         HttpURLConnection connection = null;
